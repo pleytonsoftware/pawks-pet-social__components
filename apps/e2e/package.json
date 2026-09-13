@@ -1,0 +1,23 @@
+{
+	"name": "e2e",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"test:e2e": "playwright test",
+		"test:e2e:update-snapshots": "playwright test --update-snapshots",
+		"lint": "eslint . --max-warnings 0",
+		"check-types": "tsc --noEmit"
+	},
+	"devDependencies": {
+		"@config/eslint-config": "workspace:*",
+		"@config/typescript-config": "workspace:*",
+		"@playwright/test": "1.63.0",
+		"@types/node": "26.4.1",
+		"@typescript/native": "npm:typescript@^7.0.2",
+		"docs": "workspace:*",
+		"eslint": "10.9.1",
+		"http-server": "14.1.1",
+		"typescript": "npm:@typescript/typescript6@^6.0.2"
+	}
+}

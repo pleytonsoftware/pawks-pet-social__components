@@ -1,3 +1,27 @@
 packages:
   - "apps/*"
   - "packages/*"
+
+minimumReleaseAge: 7200 # 5 days in minutes
+
+strictDepBuilds: true
+
+trustPolicy: no-downgrade
+
+savePrefix: ""
+
+nodeLinker: isolated
+
+preferWorkspacePackages: true
+
+sharedWorkspaceLockfile: true
+resolutionMode: highest
+
+overrides:
+  semver@6.3.1: 6.3.0
+  chokidar@4.0.3: 4.0.1
+
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  unrs-resolver: true

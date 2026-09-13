@@ -1,20 +1,28 @@
 {
-  "name": "components",
-  "private": true,
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
-  },
-  "devDependencies": {
-    "prettier": "3.9.6",
-    "turbo": "^2.10.12",
-    "typescript": "7.0.2"
-  },
-  "packageManager": "pnpm@11.25.0",
-  "engines": {
-    "node": ">=24"
-  }
+	"name": "@pawks/components-root",
+	"private": true,
+	"scripts": {
+		"build": "turbo run build",
+		"dev": "turbo run dev",
+		"lint": "turbo run lint",
+		"format": "prettier --write \"**/*.{ts,tsx,md,mjs,json}\"",
+		"check-types": "turbo run check-types",
+		"test:e2e": "turbo run test:e2e",
+		"changeset": "changeset",
+		"version-packages": "changeset version",
+		"release": "turbo run build --filter=@pawks/components && changeset publish"
+	},
+	"devDependencies": {
+		"@changesets/cli": "3.0.2",
+		"@serverless-guru/prettier-plugin-import-order": "0.4.2",
+		"@typescript/native": "npm:typescript@^7.0.2",
+		"prettier": "3.9.6",
+		"prettier-plugin-tailwindcss": "0.8.1",
+		"turbo": "^2.10.12",
+		"typescript": "npm:@typescript/typescript6@^6.0.2"
+	},
+	"packageManager": "pnpm@11.25.0",
+	"engines": {
+		"node": ">=24"
+	}
 }

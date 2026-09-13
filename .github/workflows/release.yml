@@ -1,0 +1,51 @@
+name: Release
+
+on:
+    push:
+        branches: [main]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            pull-requests: write
+            id-token: write
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - uses: pnpm/action-setup@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  cache: pnpm
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Build publishable packages
+              run: pnpm turbo run build --filter=@pawks/components
+
+            # publishConfig.registry in packages/components/package.json says WHERE
+            # to publish; this .npmrc supplies the auth token for that registry
+            # host, which cannot live in package.json. Configure the
+            # VERDACCIO_REGISTRY_HOST repo variable and VERDACCIO_TOKEN secret once
+            # a real Verdaccio instance exists (see packages/components/package.json
+            # for the matching REPLACE_WITH_VERDACCIO_URL placeholder).
+            - name: Configure registry auth for Verdaccio
+              run: |
+                  echo "//${{ vars.VERDACCIO_REGISTRY_HOST }}/:_authToken=${{ secrets.VERDACCIO_TOKEN }}" >> ~/.npmrc
+                  echo "registry=https://${{ vars.VERDACCIO_REGISTRY_HOST }}/" >> ~/.npmrc
+
+            - name: Create Release Pull Request or Publish
+              uses: changesets/action@v1
+              with:
+                  version: pnpm changeset version
+                  publish: pnpm changeset publish
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,159 +1,75 @@
-# Turborepo starter
+# Pawks Components
 
-This Turborepo starter is maintained by the Turborepo core team.
+Monorepo for `@pawks/components` — the Tailwind + Radix component library for Pawks apps. See [DESIGN.md](./DESIGN.md) for the design system philosophy and visual direction.
 
-## Using this example
+## Workspace layout
 
-Run the following command:
+- `packages/components` — published as **`@pawks/components`**. The component library itself.
+- `packages/eslint-config` — published as **`@config/eslint-config`**. Shared ESLint flat configs.
+- `packages/typescript-config` — published as **`@config/typescript-config`**. Shared `tsconfig.json` bases.
+- `apps/docs` — **Storybook** (React + Vite), for developing and visually reviewing components from `@pawks/components`.
+- `apps/e2e` — **Playwright**, for visual regression testing against the Storybook build produced by `apps/docs`.
 
-```sh
-npx create-turbo@latest
-```
+Only `@pawks/components` is ever published; every other package/app is private.
 
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `@next/eslint-plugin-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+## Common commands
 
 ```sh
-cd my-turborepo
-turbo build
+pnpm install                # install everything
+pnpm build                  # build all packages (turbo run build)
+pnpm lint                   # lint all packages
+pnpm check-types            # type-check all packages
+pnpm format                 # format the whole repo with prettier
+
+pnpm --filter docs dev      # start the Storybook dev server (http://localhost:6006)
+turbo run build-storybook   # build the static Storybook site (apps/docs/storybook-static)
+
+pnpm test:e2e               # turbo run test:e2e — builds @pawks/components, builds
+                             # Storybook, then runs Playwright against it
 ```
 
-Without global `turbo`, use your package manager:
+Always run `pnpm test:e2e` (or `turbo run test:e2e`) rather than `pnpm --filter e2e test:e2e` directly — Playwright only _serves_ the already-built `apps/docs/storybook-static`, it doesn't build it. Going through turbo guarantees a fresh Storybook build runs first.
+
+## Adding a new component
+
+1. Create `packages/components/src/components/<name>/<name>.tsx` and a small barrel `packages/components/src/components/<name>/index.ts` that re-exports it (see `button/` for the pattern).
+2. That's it. The build automatically:
+    - discovers the new folder and adds it as its own `tsup` entry (`dist/<name>.js`),
+    - regenerates the root barrel (`packages/components/src/index.ts` — **auto-generated, never hand-edit it**) to re-export it,
+    - exposes it at both `@pawks/components` (the barrel) and `@pawks/components/<name>` (the subpath), via the package's wildcard `exports` map — no `package.json` edits needed.
+3. Add a story under `apps/docs/stories/<name>.stories.tsx` and, if you want visual regression coverage, a spec in `apps/e2e/e2e/<name>.spec.ts` (navigate to `/iframe.html?id=<story-id>&viewMode=story` and screenshot the rendered element — see `button.spec.ts`). Run `pnpm --filter e2e test:e2e:update-snapshots` once to record the baseline and commit it.
+
+## Publishing to Verdaccio
+
+Versioning and publishing are automated with [Changesets](https://github.com/changesets/changesets), targeting only `@pawks/components` (see `.changeset/config.json`'s `ignore` list).
+
+1. After making a change to `@pawks/components`, run `pnpm changeset`, describe the change, and pick a bump (patch/minor/major). Commit the generated `.changeset/*.md` file with your PR.
+2. Merging to `main` triggers `.github/workflows/release.yml`, which opens/updates a "Version Packages" PR (via `changesets/action`).
+3. Merging that PR runs `pnpm changeset publish`, which publishes `@pawks/components` to the registry configured in its `publishConfig.registry`.
+
+**One-time setup still pending:** `packages/components/package.json`'s `publishConfig.registry` has a `REPLACE_WITH_VERDACCIO_URL` placeholder — swap in your real Verdaccio URL. The release workflow also needs a `VERDACCIO_REGISTRY_HOST` repository variable and a `VERDACCIO_TOKEN` repository secret configured in GitHub before it can actually authenticate and publish.
+
+### Consuming the published package
 
 ```sh
-cd my-turborepo
-npx turbo build
-pnpm exec turbo build
-pnpm exec turbo build
+pnpm add @pawks/components
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+```ts
+import '@pawks/components/styles.css'
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+// once, e.g. in your app's root layout
+import { Button } from '@pawks/components'
 
-```sh
-turbo build --filter=docs
+// or: from "@pawks/components/button"
 ```
 
-Without global `turbo`:
+The package ships a precompiled `styles.css` that works with zero Tailwind configuration on the consumer's side. For deeper theming, `@pawks/components/theme.css` exports just the `@theme` token block to `@import` and override in your own Tailwind entry, and `dist/*.js` keeps Tailwind class strings intact so `@source` can re-scan them against your overridden theme.
 
-```sh
-npx turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+## A note on the toolchain
 
-### Develop
+This repo intentionally runs on very new tooling (TypeScript 7, ESLint 10, Tailwind v4), which means a couple of things are wired up non-obviously:
 
-To develop all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo dev
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo dev
-pnpm exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-pnpm exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-pnpm exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+- `typescript` resolves to a `@typescript/typescript6` compatibility shim (see any `package.json`) because `typescript-eslint` doesn't yet support TypeScript 7. `@typescript/native` gives explicit access to the real TS7 compiler if you need it directly.
+- `@pawks/components` generates its `.d.ts` files via plain `tsc --emitDeclarationOnly` rather than `tsup`'s built-in bundler, which currently crashes under TypeScript 7 — see the comments in `packages/components/tsup.config.ts` and `scripts/flatten-dts.mjs`.
+- ESLint's import rules run on `eslint-plugin-import-x` (registered under the `import` key), not `eslint-plugin-import`, which doesn't support ESLint 10's flat-config internals yet.
