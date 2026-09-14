@@ -1,8 +1,8 @@
-import { CatBig } from './cat-big.js'
+import { HorseHead } from './horse-head.js'
 import { PawksIconTemplate } from './template.js'
 
 export { PawksIconTemplate } from './template.js'
-export { CatBig } from './cat-big.js'
+export { HorseHead } from './horse-head.js'
 
 /**
  * Enumerable registry of every Pawks-authored icon (custom + wrapped
@@ -13,5 +13,5 @@ export { CatBig } from './cat-big.js'
  */
 export const pawksIcons = {
 	PawksIconTemplate,
-	CatBig,
+	HorseHead,
 } as const

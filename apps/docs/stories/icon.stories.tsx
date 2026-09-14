@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Icon, type IconProps } from '@pawks/components/icon'
-import { CatBig, Heart, PawksIconTemplate } from '@pawks/icons'
+import { Heart, HorseHead, PawksIconTemplate } from '@pawks/icons'
 
 const SIZES: NonNullable<IconProps['size']>[] = ['xs', 'sm', 'md', 'lg', 'xl']
 
@@ -34,7 +34,7 @@ export const AllSources: Story = {
 	render: () => (
 		<div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
 			<Icon IconComponent={Heart} size='lg' />
-			<Icon IconComponent={CatBig} size='lg' />
+			<Icon IconComponent={HorseHead} size='lg' />
 			<Icon IconComponent={PawksIconTemplate} size='lg' />
 		</div>
 	),
