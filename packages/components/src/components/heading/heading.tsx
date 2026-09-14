@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react'
+import type { FC, HTMLAttributes } from 'react'
 
 import { cn } from '@/lib/cn.js'
 
@@ -26,7 +26,7 @@ export const headingVariants = cva('text-foreground', {
 
 export type HeadingProps = HTMLAttributes<HTMLHeadingElement> & VariantProps<typeof headingVariants> & { as?: HeadingTag }
 
-export function Heading({ className, variant, as, ...props }: HeadingProps) {
+export const Heading: FC<HeadingProps> = ({ className, variant, as, ...props }) => {
 	const Comp = as ?? 'h1'
 	return <Comp className={cn(headingVariants({ variant }), className)} {...props} />
 }

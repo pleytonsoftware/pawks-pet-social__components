@@ -1,0 +1,48 @@
+{
+	"name": "@pawks/icons",
+	"version": "0.1.0",
+	"private": false,
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://REPLACE_WITH_VERDACCIO_URL/"
+	},
+	"type": "module",
+	"sideEffects": false,
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		},
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsup && tsc --emitDeclarationOnly",
+		"dev": "tsup --watch",
+		"lint": "eslint . --max-warnings 0",
+		"check-types": "tsc --noEmit"
+	},
+	"peerDependencies": {
+		"react": "^19.0.0"
+	},
+	"dependencies": {
+		"@lucide/lab": "0.2.0",
+		"lucide-react": "1.43.0"
+	},
+	"devDependencies": {
+		"@config/eslint-config": "workspace:*",
+		"@config/typescript-config": "workspace:*",
+		"@types/react": "19.2.18",
+		"@typescript/native": "npm:typescript@^7.0.2",
+		"eslint": "10.9.1",
+		"react": "19.2.8",
+		"tsup": "^8.5.1",
+		"typescript": "npm:@typescript/typescript6@^6.0.2"
+	}
+}

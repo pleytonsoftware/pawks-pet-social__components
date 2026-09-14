@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes } from 'react'
+import type { ButtonHTMLAttributes, FC } from 'react'
 
 import { cn } from '@/lib/cn.js'
 
@@ -87,7 +87,7 @@ export const buttonVariants = cva(
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof buttonVariants> & { asChild?: boolean }
 
-export function Button({ className, tone, appearance, size, asChild, ...props }: ButtonProps) {
+export const Button: FC<ButtonProps> = ({ className, tone, appearance, size, asChild, ...props }) => {
 	const Comp = asChild ? Slot : 'button'
 	return <Comp className={cn(buttonVariants({ tone, appearance, size }), className)} {...props} />
 }

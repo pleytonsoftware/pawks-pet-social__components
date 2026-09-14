@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react'
+import type { FC, HTMLAttributes } from 'react'
 
 import { cn } from '@/lib/cn.js'
 
@@ -20,7 +20,7 @@ export const textVariants = cva('text-foreground', {
 
 export type TextProps = HTMLAttributes<HTMLElement> & VariantProps<typeof textVariants> & { as?: TextTag }
 
-export function Text({ className, variant, as, ...props }: TextProps) {
+export const Text: FC<TextProps> = ({ className, variant, as, ...props }) => {
 	const Comp = as ?? 'span'
 	return <Comp className={cn(textVariants({ variant }), className)} {...props} />
 }
