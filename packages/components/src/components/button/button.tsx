@@ -1,5 +1,7 @@
+import type { LucideIcon } from 'lucide-react'
 import type { ButtonHTMLAttributes, FC } from 'react'
 
+import { Icon } from '@/components/icon/icon.js'
 import { cn } from '@/lib/cn.js'
 
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -69,7 +71,7 @@ const toneAppearanceCompoundVariants = APPEARANCES.flatMap((appearance) =>
 )
 
 export const buttonVariants = cva(
-	'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-40',
+	'inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-40',
 	{
 		variants: {
 			tone: emptyVariantMap(TONES),
@@ -79,15 +81,51 @@ export const buttonVariants = cva(
 				md: 'h-9 px-3 py-2',
 				lg: 'h-10 px-4 py-2.5',
 			},
+			// Square, padding-free sizing for icon-only buttons (shadcn's
+			// "size: icon" pattern, extended across our own sm/md/lg scale
+			// instead of one fixed size). Real classes live in
+			// compoundVariants below; empty here purely so cva/VariantProps
+			// knows `iconOnly` is a valid boolean prop.
+			iconOnly: { true: '', false: '' },
 		},
-		compoundVariants: [...toneAppearanceCompoundVariants, { appearance: 'link', class: 'h-auto p-0' }],
-		defaultVariants: { tone: 'primary', appearance: 'solid', size: 'md' },
+		compoundVariants: [
+			...toneAppearanceCompoundVariants,
+			{ appearance: 'link', class: 'h-auto p-0' },
+			{ iconOnly: true, size: 'sm', class: 'w-8 p-0' },
+			{ iconOnly: true, size: 'md', class: 'w-9 p-0' },
+			{ iconOnly: true, size: 'lg', class: 'w-10 p-0' },
+		],
+		defaultVariants: { tone: 'primary', appearance: 'solid', size: 'md', iconOnly: false },
 	},
 )
 
-export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof buttonVariants> & { asChild?: boolean }
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
+	VariantProps<typeof buttonVariants> & {
+		asChild?: boolean
+		/**
+		 * Icon to render inside the button (shadcn-style — no separate
+		 * IconButton component). Combine with `iconOnly` for an icon-only
+		 * square button; without it, the icon renders alongside `children`.
+		 * Ignored when `asChild` is set, since Slot requires a single child
+		 * — pass your own icon markup as part of `children` in that case.
+		 * Icon-only buttons need an accessible name: pass `aria-label`.
+		 */
+		icon?: LucideIcon
+	}
 
-export const Button: FC<ButtonProps> = ({ className, tone, appearance, size, asChild, ...props }) => {
-	const Comp = asChild ? Slot : 'button'
-	return <Comp className={cn(buttonVariants({ tone, appearance, size }), className)} {...props} />
+export const Button: FC<ButtonProps> = ({ className, tone, appearance, size = 'md', iconOnly, icon, children, asChild, ...props }) => {
+	if (asChild) {
+		return (
+			<Slot className={cn(buttonVariants({ tone, appearance, size, iconOnly }), className)} {...props}>
+				{children}
+			</Slot>
+		)
+	}
+
+	return (
+		<button className={cn(buttonVariants({ tone, appearance, size, iconOnly }), className)} {...props}>
+			{icon ? <Icon IconComponent={icon} size={size ?? 'md'} /> : null}
+			{iconOnly ? null : children}
+		</button>
+	)
 }

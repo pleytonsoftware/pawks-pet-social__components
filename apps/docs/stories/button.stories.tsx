@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Button, type ButtonProps } from '@pawks/components/button'
+import { Heart } from '@pawks/icons'
 
 const TONES: NonNullable<ButtonProps['tone']>[] = ['primary', 'secondary', 'muted', 'accent', 'destructive', 'success', 'warning', 'info']
 const APPEARANCES: NonNullable<ButtonProps['appearance']>[] = ['solid', 'outline', 'ghost', 'link']
@@ -25,6 +26,20 @@ export const Primary: Story = {
 
 export const Muted: Story = {
 	args: { tone: 'muted', appearance: 'solid', size: 'md', children: 'Click me' },
+}
+
+export const WithIcon: Story = {
+	args: { tone: 'primary', appearance: 'solid', size: 'md', icon: Heart, children: 'Like' },
+}
+
+export const IconOnly: Story = {
+	render: () => (
+		<div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+			{SIZES.map((size) => (
+				<Button key={size} icon={Heart} iconOnly size={size} aria-label='Like' />
+			))}
+		</div>
+	),
 }
 
 export const AllVariants: Story = {
