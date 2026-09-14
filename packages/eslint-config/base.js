@@ -35,6 +35,6 @@ export const config = [
     },
   },
   {
-    ignores: ["dist/**"],
+    ignores: ["dist/**", "storybook-static/**", "playwright-report/**", "test-results/**"],
   },
 ];

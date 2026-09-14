@@ -1,4 +1,189 @@
 @import 'tailwindcss';
 @import './theme.css';
 
+/* Class-based dark mode (shadcn/next-themes convention), not
+   prefers-color-scheme. Combine with [data-coat] for full theming,
+   e.g. [data-coat="bombay"].dark. Components should stay coat/mode-
+   agnostic via semantic utilities (bg-primary, text-foreground, …) —
+   this exists so a future component CAN reach for `dark:` directly if
+   a genuine exception ever arises. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Runtime color aliasing (shadcn v4 pattern). `@theme inline` keeps
+   each utility's var() reference live at the point of use instead of
+   resolving it once at build time — this is what lets one precompiled
+   stylesheet re-theme at runtime via [data-coat] + .dark with zero
+   component code changes. Actual values live in ./theme.css. */
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-primary-hover: var(--primary-hover);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-secondary-hover: var(--secondary-hover);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-muted-hover: var(--muted-hover);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-accent-hover: var(--accent-hover);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+
+	/* Fixed semantic status colors — identical across all coats (DESIGN §8.3) */
+	--color-success: var(--success);
+	--color-success-foreground: var(--success-foreground);
+	--color-success-hover: var(--success-hover);
+	--color-warning: var(--warning);
+	--color-warning-foreground: var(--warning-foreground);
+	--color-warning-hover: var(--warning-hover);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-destructive-hover: var(--destructive-hover);
+	--color-info: var(--info);
+	--color-info-foreground: var(--info-foreground);
+	--color-info-hover: var(--info-hover);
+}
+
+/* Static, coat/mode-independent locked tokens (DESIGN.md §25). */
+@theme {
+	/* Typeface — Inter (DESIGN §14). This package does NOT bundle
+	   @font-face rules, font files, or a Google Fonts import — loading
+	   the real Inter typeface (next/font, self-hosted, Google Fonts,
+	   etc.) is the responsibility of the consuming application. This
+	   token only names the intended family with safe system fallbacks
+	   so layout is sane even if Inter isn't loaded. */
+	--font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+	/* Radius (DESIGN §25.3). sm already equals Tailwind's default —
+	   declared explicitly to lock it. md/lg/xl differ from Tailwind's
+	   defaults (0.375rem/0.5rem/0.75rem). "full" (9999px) needs no
+	   token: Tailwind's built-in `rounded-full` utility already uses
+	   calc(infinity * 1px) and isn't driven by a --radius-full variable. */
+	--radius-sm: 0.25rem;
+	--radius-md: 0.5rem;
+	--radius-lg: 0.75rem;
+	--radius-xl: 1rem;
+
+	/* Shadows (DESIGN §25.5) — used only for floating surfaces (popover,
+	   menu, dialog, tooltip); cards stay border-led, not shadow-led.
+	   All three differ from Tailwind's multi-layer defaults. */
+	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+	--shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+	--shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.14);
+
+	/* Motion (DESIGN §17 / §25.7). */
+	--ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* entrances — deliberately overrides Tailwind's default ease-out */
+	--ease-in-out: cubic-bezier(0.4, 0, 0.2, 1); /* toggles — already equals Tailwind's default; locked explicitly */
+
+	/* Duration scale (DESIGN §17) has no dedicated Tailwind theme
+	   namespace for `duration-*` utilities in v4 (transition-duration
+	   utilities are generated from --spacing-derived numbers, e.g.
+	   `duration-150` already works with no token needed). Documented
+	   here for reference: instant=0ms fast=100ms base=150ms
+	   emphasis=200ms slow=300ms → duration-0 / duration-100 /
+	   duration-150 / duration-200 / duration-300. */
+
+	/* Z-index (DESIGN §25.9). Generates z-base/z-dropdown/z-sticky/
+	   z-overlay/z-modal/z-popover/z-tooltip/z-toast utilities. NOTE:
+	   Tailwind v4's core `z-*` utility isn't restricted to only these
+	   names — raw numeric utilities like `z-15` remain usable too.
+	   Enforcing "always use the named scale" is a lint/review
+	   convention, not something this file can guarantee. */
+	--z-index-base: 0;
+	--z-index-dropdown: 10;
+	--z-index-sticky: 20;
+	--z-index-overlay: 30;
+	--z-index-modal: 40;
+	--z-index-popover: 50;
+	--z-index-tooltip: 60;
+	--z-index-toast: 70;
+
+	/* Typography (DESIGN §14) — compact/information-dense philosophy,
+	   default body text is 14px, not 16-17px. Each named style bundles
+	   font-size + line-height + font-weight + letter-spacing into ONE
+	   `text-*` utility (Tailwind v4 supports --text-{name}--line-height,
+	   --font-weight, and --letter-spacing as paired sub-properties).
+	   Line-heights are unitless ratios (not px), matching how DESIGN
+	   §14 specifies them. Weights in use: 400/500/600/650/700 — 650
+	   (H2 only) renders exactly only with Inter Variable loaded;
+	   loading the actual font files is the consuming app's job either
+	   way (this package never bundles fonts). */
+	--text-display: 1.75rem; /* 28px */
+	--text-display--line-height: 1.15;
+	--text-display--font-weight: 700;
+	--text-display--letter-spacing: -0.02em;
+
+	--text-h1: 1.5rem; /* 24px */
+	--text-h1--line-height: 1.2;
+	--text-h1--font-weight: 700;
+	--text-h1--letter-spacing: -0.015em;
+
+	--text-h2: 1.25rem; /* 20px */
+	--text-h2--line-height: 1.25;
+	--text-h2--font-weight: 650;
+	--text-h2--letter-spacing: -0.01em;
+
+	--text-h3: 1rem; /* 16px */
+	--text-h3--line-height: 1.3;
+	--text-h3--font-weight: 600;
+	--text-h3--letter-spacing: normal;
+
+	--text-body: 0.875rem; /* 14px */
+	--text-body--line-height: 1.45;
+	--text-body--font-weight: 400;
+	--text-body--letter-spacing: normal;
+
+	--text-small: 0.8125rem; /* 13px — "Body Small" in DESIGN §14 */
+	--text-small--line-height: 1.4;
+	--text-small--font-weight: 400;
+	--text-small--letter-spacing: normal;
+
+	--text-label: 0.8125rem; /* 13px */
+	--text-label--line-height: 1.3;
+	--text-label--font-weight: 500;
+	--text-label--letter-spacing: normal;
+
+	--text-caption: 0.75rem; /* 12px */
+	--text-caption--line-height: 1.3;
+	--text-caption--font-weight: 400;
+	--text-caption--letter-spacing: normal;
+
+	/* Spacing (§25.2) and Breakpoints (§25.8) are intentionally NOT
+	   overridden: Tailwind v4's default --spacing: 0.25rem already
+	   generates the exact 4/8/12/…/80px scale dynamically, and
+	   Tailwind's default breakpoints (640/768/1024/1280px) already
+	   equal DESIGN's. Re-declaring them would be redundant.
+
+	   Component sizing (§25.4) and icon sizes (§25.6) have no
+	   dedicated Tailwind theme namespace (v4 only auto-generates
+	   utilities for its fixed set of namespaces — color/font/text/
+	   spacing/radius/shadow/ease/breakpoint/z-index/etc. — not for
+	   arbitrary new ones like --height-* or --icon-*). Documented as
+	   a usage mapping instead of a non-functional token. Controls are
+	   deliberately compact — sizing tracks content, not the type scale:
+	     Button sm  = 32px h-8  / px-2 (8px)  / py-1.5 (6px)
+	     Button md  = 36px h-9  / px-3 (12px) / py-2 (8px)  ← default
+	     Button lg  = 40px h-10 / px-4 (16px) / py-2.5 (10px)
+	     Badge      = 24px h-6  / px-2 (8px)
+	     Input      = 36px h-9  / px-2.5 (10px)
+	   icon sizes: 12→size-3  14→size-3.5  16→size-4  18→size-[18px]*
+	               20→size-5  24→size-6    32→size-8
+	     * 18px doesn't fall on a clean --spacing multiple; use an
+	       arbitrary value until/unless a future Icon component needs
+	       something more structured.
+
+	   Border widths (§25.5): default 1px = Tailwind's `border` as-is.
+	   The 1.5px emphasis/error width has no matching Tailwind scale
+	   step (border-width utilities are a fixed set, not namespace-
+	   driven) — use `border-[1.5px]` at the point of use. */
+}
+
 @source '../components/**/*.{ts,tsx}';

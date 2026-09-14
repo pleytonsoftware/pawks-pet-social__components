@@ -1,15 +1,270 @@
-@theme {
-	--color-background: oklch(1 0 0);
-	--color-foreground: oklch(0.145 0 0);
-	--color-primary: oklch(0.205 0 0);
-	--color-primary-foreground: oklch(0.985 0 0);
-	--color-muted: oklch(0.97 0 0);
-	--color-muted-foreground: oklch(0.556 0 0);
-	--color-border: oklch(0.922 0 0);
-	--color-destructive: oklch(0.577 0.245 27.325);
-	--color-destructive-foreground: oklch(0.985 0 0);
+/* ==========================================================================
+   Pawks Design System — Coat Tokens (DESIGN.md §8)
+   Flat file, no @import — copied verbatim to dist/theme.css.
+   Coat selection:  [data-coat="<slug>"]   — no attribute = Ragdoll (default)
+   Mode selection:  .dark                   — combine as [data-coat="x"].dark
+   Values are HSL, converted from DESIGN.md's verified hex (kept as a
+   comment on each line for traceability).
+   ========================================================================== */
 
-	--radius-sm: 0.25rem;
-	--radius-md: 0.5rem;
-	--radius-lg: 0.75rem;
+/* Fixed semantic status colors — identical across every coat (DESIGN §8.3) */
+:root {
+	--success: hsl(142 50% 33%); /* #2a7e49 */
+	--success-foreground: hsl(0 20% 99%); /* #fdfcfc */
+	--warning: hsl(38 80% 33%); /* #976611 */
+	--warning-foreground: hsl(0 20% 99%); /* #fdfcfc */
+	--destructive: hsl(4 65% 49%); /* #ce372c */
+	--destructive-foreground: hsl(0 20% 99%); /* #fdfcfc */
+	--info: hsl(211 60% 45%); /* #2e70b8 */
+	--info-foreground: hsl(0 20% 99%); /* #fdfcfc */
+}
+
+.dark {
+	--success: hsl(142 50% 40%); /* #339958 */
+	--success-foreground: hsl(26 12% 11%); /* #201c19 */
+	--warning: hsl(38 80% 39%); /* #b37914 */
+	--warning-foreground: hsl(26 12% 11%); /* #201c19 */
+	--destructive: hsl(4 65% 59%); /* #da5c52 */
+	--destructive-foreground: hsl(26 12% 11%); /* #201c19 */
+	--info: hsl(211 60% 54%); /* #4387d0 */
+	--info-foreground: hsl(26 12% 11%); /* #201c19 */
+}
+
+/* Coat 1 — Ragdoll (reference coat, DEFAULT — applies with no [data-coat]) */
+:root {
+	--background: hsl(15 20% 96%); /* #f7f4f3 */
+	--foreground: hsl(20 18% 13%); /* #271f1b */
+	--card: hsl(0 20% 99%); /* #fdfcfc */
+	--card-foreground: hsl(20 18% 13%); /* #271f1b */
+	--popover: hsl(0 20% 99%); /* #fdfcfc */
+	--popover-foreground: hsl(20 18% 13%); /* #271f1b */
+	--primary: hsl(0 11% 44%); /* #7b6363 */
+	--primary-foreground: hsl(0 20% 99%); /* #fdfcfc */
+	--secondary: hsl(210 9% 54%); /* #808a94 */
+	--secondary-foreground: hsl(20 18% 13%); /* #271f1b */
+	--muted: hsl(32 17% 83%); /* #dbd4cc */
+	--muted-foreground: hsl(20 14% 34%); /* #63534b */
+	--accent: hsl(15 13% 58%); /* #a18c85 */
+	--accent-foreground: hsl(20 18% 13%); /* #271f1b */
+	--border: hsl(20 15% 88%); /* #e5dfdc */
+	--input: hsl(22 14% 55%); /* #9c887c */
+	--ring: hsl(0 11% 44%); /* #7b6363 */
+}
+
+.dark {
+	--background: hsl(20 13% 9%); /* #1a1614 */
+	--foreground: hsl(33 18% 90%); /* #eae6e1 */
+	--card: hsl(22 12% 13%); /* #25201d */
+	--card-foreground: hsl(33 18% 90%); /* #eae6e1 */
+	--popover: hsl(22 12% 13%); /* #25201d */
+	--popover-foreground: hsl(33 18% 90%); /* #eae6e1 */
+	--primary: hsl(0 14% 64%); /* #b09696 */
+	--primary-foreground: hsl(20 13% 9%); /* #1a1614 */
+	--secondary: hsl(212 10% 70%); /* #abb2ba */
+	--secondary-foreground: hsl(20 13% 9%); /* #1a1614 */
+	--muted: hsl(22 12% 18%); /* #332c28 */
+	--muted-foreground: hsl(26 14% 68%); /* #b9aca2 */
+	--accent: hsl(16 14% 68%); /* #b9a8a2 */
+	--accent-foreground: hsl(20 13% 9%); /* #1a1614 */
+	--border: hsl(20 12% 24%); /* #453b36 */
+	--input: hsl(22 14% 39%); /* #716056 */
+	--ring: hsl(0 14% 64%); /* #b09696 */
+}
+
+/* Coat 2 — Abyssinian */
+[data-coat='abyssinian'] {
+	--background: hsl(30 20% 96%); /* #f7f5f3 */
+	--foreground: hsl(30 22% 14%); /* #2c241c */
+	--card: hsl(0 20% 99%); /* #fdfcfc */
+	--card-foreground: hsl(30 22% 14%); /* #2c241c */
+	--popover: hsl(0 20% 99%); /* #fdfcfc */
+	--popover-foreground: hsl(30 22% 14%); /* #2c241c */
+	--primary: hsl(20 23% 48%); /* #95705e */
+	--primary-foreground: hsl(0 20% 99%); /* #fdfcfc */
+	--secondary: hsl(42 9% 45%); /* #7d7769 */
+	--secondary-foreground: hsl(30 20% 2%); /* #060504 */
+	--muted: hsl(34 35% 68%); /* #cbb292 */
+	--muted-foreground: hsl(31 18% 27%); /* #514538 */
+	--accent: hsl(48 32% 60%); /* #baad79 */
+	--accent-foreground: hsl(30 20% 2%); /* #060504 */
+	--border: hsl(33 15% 88%); /* #e5e1dc */
+	--input: hsl(34 20% 53%); /* #9f8a6f */
+	--ring: hsl(20 23% 48%); /* #95705e */
+}
+
+[data-coat='abyssinian'].dark {
+	--background: hsl(30 17% 9%); /* #1b1713 */
+	--foreground: hsl(33 22% 90%); /* #ebe6e0 */
+	--card: hsl(36 15% 13%); /* #26221c */
+	--card-foreground: hsl(33 22% 90%); /* #ebe6e0 */
+	--popover: hsl(36 15% 13%); /* #26221c */
+	--popover-foreground: hsl(33 22% 90%); /* #ebe6e0 */
+	--primary: hsl(20 30% 51%); /* #a8765d */
+	--primary-foreground: hsl(30 17% 9%); /* #1b1713 */
+	--secondary: hsl(41 12% 48%); /* #89806c */
+	--secondary-foreground: hsl(30 17% 9%); /* #1b1713 */
+	--muted: hsl(32 14% 18%); /* #342e27 */
+	--muted-foreground: hsl(32 16% 58%); /* #a59583 */
+	--accent: hsl(48 28% 43%); /* #8c804f */
+	--accent-foreground: hsl(30 17% 9%); /* #1b1713 */
+	--border: hsl(32 14% 24%); /* #463e35 */
+	--input: hsl(33 16% 38%); /* #706251 */
+	--ring: hsl(20 30% 51%); /* #a8765d */
+}
+
+/* Coat 3 — Maine Coon */
+[data-coat='maine-coon'] {
+	--background: hsl(30 10% 96%); /* #f6f5f4 */
+	--foreground: hsl(33 15% 29%); /* #554b3f */
+	--card: hsl(0 20% 99%); /* #fdfcfc */
+	--card-foreground: hsl(33 15% 29%); /* #554b3f */
+	--popover: hsl(0 20% 99%); /* #fdfcfc */
+	--popover-foreground: hsl(33 15% 29%); /* #554b3f */
+	--primary: hsl(28 23% 45%); /* #8c7058 */
+	--primary-foreground: hsl(0 20% 99%); /* #fdfcfc */
+	--secondary: hsl(137 6% 47%); /* #707e74 */
+	--secondary-foreground: hsl(0 20% 99%); /* #fdfcfc */
+	--muted: hsl(38 7% 48%); /* #827c72 */
+	--muted-foreground: hsl(30 11% 7%); /* #141210 */
+	--accent: hsl(30 25% 89%); /* #eae3dc */
+	--accent-foreground: hsl(33 15% 29%); /* #554b3f */
+	--border: hsl(34 11% 88%); /* #e4e1dd */
+	--input: hsl(33 14% 54%); /* #9a8b79 */
+	--ring: hsl(28 23% 45%); /* #8c7058 */
+}
+
+[data-coat='maine-coon'].dark {
+	--background: hsl(30 13% 9%); /* #1a1714 */
+	--foreground: hsl(34 11% 88%); /* #e4e1dd */
+	--card: hsl(30 12% 13%); /* #25211d */
+	--card-foreground: hsl(34 11% 88%); /* #e4e1dd */
+	--popover: hsl(30 12% 13%); /* #25211d */
+	--popover-foreground: hsl(34 11% 88%); /* #e4e1dd */
+	--primary: hsl(29 26% 49%); /* #9d7b5c */
+	--primary-foreground: hsl(30 13% 9%); /* #1a1714 */
+	--secondary: hsl(137 10% 48%); /* #6e8775 */
+	--secondary-foreground: hsl(30 13% 9%); /* #1a1714 */
+	--muted: hsl(33 10% 18%); /* #322e29 */
+	--muted-foreground: hsl(30 10% 58%); /* #9f9489 */
+	--accent: hsl(27 16% 39%); /* #736254 */
+	--accent-foreground: hsl(30 13% 9%); /* #1a1714 */
+	--border: hsl(30 10% 24%); /* #433d37 */
+	--input: hsl(28 10% 39%); /* #6d635a */
+	--ring: hsl(29 26% 49%); /* #9d7b5c */
+}
+
+/* Coat 4 — Havana Brown */
+[data-coat='havana-brown'] {
+	--background: hsl(30 20% 96%); /* #f7f5f3 */
+	--foreground: hsl(35 20% 16%); /* #322b21 */
+	--card: hsl(0 20% 99%); /* #fdfcfc */
+	--card-foreground: hsl(35 20% 16%); /* #322b21 */
+	--popover: hsl(0 20% 99%); /* #fdfcfc */
+	--popover-foreground: hsl(35 20% 16%); /* #322b21 */
+	--primary: hsl(30 38% 45%); /* #9d7246 */
+	--primary-foreground: hsl(0 20% 99%); /* #fdfcfc */
+	--secondary: hsl(34 27% 35%); /* #705c41 */
+	--secondary-foreground: hsl(0 20% 99%); /* #fdfcfc */
+	--muted: hsl(52 15% 52%); /* #979272 */
+	--muted-foreground: hsl(35 15% 16%); /* #2f2a23 */
+	--accent: hsl(30 30% 59%); /* #b69677 */
+	--accent-foreground: hsl(35 20% 16%); /* #322b21 */
+	--border: hsl(33 15% 88%); /* #e5e1dc */
+	--input: hsl(35 18% 53%); /* #9d8b72 */
+	--ring: hsl(30 38% 45%); /* #9d7246 */
+}
+
+[data-coat='havana-brown'].dark {
+	--background: hsl(35 20% 16%); /* #322b21 */
+	--foreground: hsl(33 16% 76%); /* #ccc3b8 */
+	--card: hsl(36 20% 20%); /* #3d3529 */
+	--card-foreground: hsl(33 16% 76%); /* #ccc3b8 */
+	--popover: hsl(36 20% 20%); /* #3d3529 */
+	--popover-foreground: hsl(33 16% 76%); /* #ccc3b8 */
+	--primary: hsl(30 36% 55%); /* #b68c63 */
+	--primary-foreground: hsl(35 20% 16%); /* #322b21 */
+	--secondary: hsl(34 24% 55%); /* #a89071 */
+	--secondary-foreground: hsl(35 20% 16%); /* #322b21 */
+	--muted: hsl(36 16% 24%); /* #473f33 */
+	--muted-foreground: hsl(35 14% 66%); /* #b4aa9c */
+	--accent: hsl(30 20% 45%); /* #8a735c */
+	--accent-foreground: hsl(35 20% 16%); /* #322b21 */
+	--border: hsl(36 18% 30%); /* #5a4f3f */
+	--input: hsl(35 16% 44%); /* #82735e */
+	--ring: hsl(30 36% 55%); /* #b68c63 */
+}
+
+/* Coat 5 — Bombay
+   NOTE: DESIGN.md §8.8 lists light-mode `ring` (#9c895e / hsl(42 25% 49%))
+   slightly different from light-mode `primary` (#9a875c / hsl(42 25% 48%))
+   — every other coat has ring === primary exactly. Transcribed verbatim;
+   worth confirming with whoever generated the palette whether this was
+   intentional or a copy/paste slip in the design doc itself. */
+[data-coat='bombay'] {
+	--background: hsl(220 14% 96%); /* #f3f4f6 */
+	--foreground: hsl(208 15% 17%); /* #262d33 */
+	--card: hsl(240 20% 99%); /* #fcfcfd */
+	--card-foreground: hsl(208 15% 17%); /* #262d33 */
+	--popover: hsl(240 20% 99%); /* #fcfcfd */
+	--popover-foreground: hsl(208 15% 17%); /* #262d33 */
+	--primary: hsl(42 25% 48%); /* #9a875c */
+	--primary-foreground: hsl(40 10% 12%); /* #22201c */
+	--secondary: hsl(93 11% 40%); /* #66725c */
+	--secondary-foreground: hsl(240 20% 99%); /* #fcfcfd */
+	--muted: hsl(223 14% 90%); /* #e2e4e9 */
+	--muted-foreground: hsl(220 10% 41%); /* #5e6573 */
+	--accent: hsl(42 20% 57%); /* #a79a7b */
+	--accent-foreground: hsl(208 15% 17%); /* #262d33 */
+	--border: hsl(223 11% 88%); /* #dddfe4 */
+	--input: hsl(221 14% 57%); /* #828ca1 */
+	--ring: hsl(42 25% 49%); /* #9c895e */
+}
+
+[data-coat='bombay'].dark {
+	--background: hsl(208 15% 17%); /* #262d33 */
+	--foreground: hsl(216 10% 90%); /* #e3e5e8 */
+	--card: hsl(240 2% 19%); /* #303032 */
+	--card-foreground: hsl(216 10% 90%); /* #e3e5e8 */
+	--popover: hsl(240 2% 19%); /* #303032 */
+	--popover-foreground: hsl(216 10% 90%); /* #e3e5e8 */
+	--primary: hsl(42 25% 52%); /* #a39166 */
+	--primary-foreground: hsl(208 15% 17%); /* #262d33 */
+	--secondary: hsl(94 12% 54%); /* #88987c */
+	--secondary-foreground: hsl(208 15% 17%); /* #262d33 */
+	--muted: hsl(220 11% 22%); /* #32363e */
+	--muted-foreground: hsl(220 8% 63%); /* #999ea8 */
+	--accent: hsl(43 16% 43%); /* #7f755c */
+	--accent-foreground: hsl(208 15% 17%); /* #262d33 */
+	--border: hsl(222 10% 26%); /* #3c4049 */
+	--input: hsl(221 10% 48%); /* #6e7687 */
+	--ring: hsl(42 25% 52%); /* #a39166 */
+}
+
+/* --------------------------------------------------------------------------
+   Hover-state derived colors (DESIGN §22): a ~7% lightness shift on the
+   same hue, darker in light mode / lighter in dark mode. Defined ONCE
+   (not per coat) via CSS relative-color syntax — each operates on
+   whichever coat's base token is currently in scope, so all 5 coats get
+   correct hover colors automatically with zero duplication.
+   -------------------------------------------------------------------------- */
+:root {
+	--primary-hover: hsl(from var(--primary) h s calc(l - 7));
+	--secondary-hover: hsl(from var(--secondary) h s calc(l - 7));
+	--muted-hover: hsl(from var(--muted) h s calc(l - 7));
+	--accent-hover: hsl(from var(--accent) h s calc(l - 7));
+	--destructive-hover: hsl(from var(--destructive) h s calc(l - 7));
+	--success-hover: hsl(from var(--success) h s calc(l - 7));
+	--warning-hover: hsl(from var(--warning) h s calc(l - 7));
+	--info-hover: hsl(from var(--info) h s calc(l - 7));
+}
+
+.dark {
+	--primary-hover: hsl(from var(--primary) h s calc(l + 7));
+	--secondary-hover: hsl(from var(--secondary) h s calc(l + 7));
+	--muted-hover: hsl(from var(--muted) h s calc(l + 7));
+	--accent-hover: hsl(from var(--accent) h s calc(l + 7));
+	--destructive-hover: hsl(from var(--destructive) h s calc(l + 7));
+	--success-hover: hsl(from var(--success) h s calc(l + 7));
+	--warning-hover: hsl(from var(--warning) h s calc(l + 7));
+	--info-hover: hsl(from var(--info) h s calc(l + 7));
 }

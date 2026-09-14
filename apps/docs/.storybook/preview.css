@@ -1,0 +1,11 @@
+/* Paints the coat/mode background & text tokens onto the Storybook canvas
+   itself — without this, dark-mode components render correctly but sit on
+   Storybook's default white canvas, since components only ever set colors
+   on themselves, never on the page. */
+body {
+	background-color: var(--background);
+	color: var(--foreground);
+	transition:
+		background-color 150ms,
+		color 150ms;
+}
