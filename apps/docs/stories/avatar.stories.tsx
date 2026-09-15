@@ -6,6 +6,7 @@ import {
 	AvatarFallbackPersonImage,
 	AvatarFallbackCatImage,
 	AvatarFallbackDogImage,
+	AvatarGroup,
 	AvatarImage,
 	type AvatarProps,
 } from '@pawks/components/avatar'
@@ -135,5 +136,33 @@ export const FallbackVariants: Story = {
 				</div>
 			))}
 		</div>
+	),
+}
+
+const GROUP_MEMBERS = [12, 13, 14, 15, 16].map((img) => `https://i.pravatar.cc/128?img=${img}`)
+
+export const Group: Story = {
+	render: () => (
+		<AvatarGroup size='lg'>
+			{GROUP_MEMBERS.map((src, index) => (
+				<Avatar key={src}>
+					<AvatarImage src={src} alt={`Member ${index + 1}`} />
+					<AvatarFallback>{index + 1}</AvatarFallback>
+				</Avatar>
+			))}
+		</AvatarGroup>
+	),
+}
+
+export const GroupCustomMax: Story = {
+	render: () => (
+		<AvatarGroup size='lg' max={4}>
+			{GROUP_MEMBERS.map((src, index) => (
+				<Avatar key={src}>
+					<AvatarImage src={src} alt={`Member ${index + 1}`} />
+					<AvatarFallback>{index + 1}</AvatarFallback>
+				</Avatar>
+			))}
+		</AvatarGroup>
 	),
 }

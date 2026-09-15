@@ -25,4 +25,14 @@ test.describe('Avatar stories', () => {
 		await page.goto('/iframe.html?id=atoms-avatar--fallback-variants&viewMode=story')
 		await expect(page.locator('body')).toHaveScreenshot('avatar-fallback-variants.png')
 	})
+
+	test('group matches screenshot', async ({ page }) => {
+		await page.goto('/iframe.html?id=atoms-avatar--group&viewMode=story')
+		await expect(page.locator('body')).toHaveScreenshot('avatar-group.png')
+	})
+
+	test('group custom max matches screenshot', async ({ page }) => {
+		await page.goto('/iframe.html?id=atoms-avatar--group-custom-max&viewMode=story')
+		await expect(page.locator('body')).toHaveScreenshot('avatar-group-custom-max.png')
+	})
 })
