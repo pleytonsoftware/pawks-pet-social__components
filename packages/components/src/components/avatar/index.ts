@@ -1,0 +1,4 @@
+export { Avatar, AvatarFallback, AvatarImage, avatarVariants } from './avatar.js'
+export type { AvatarFallbackProps, AvatarImageProps, AvatarProps } from './avatar.js'
+export { AvatarFallbackPersonImage, AvatarFallbackCatImage, AvatarFallbackDogImage } from './avatar-placeholders.js'
+export type { AvatarFallbackPersonImageProps, AvatarFallbackPetImageProps } from './avatar-placeholders.js'
