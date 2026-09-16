@@ -21,15 +21,15 @@ export default meta
 type Story = StoryObj<typeof Button>
 
 export const Primary: Story = {
-	args: { tone: 'primary', appearance: 'solid', size: 'md', children: 'Click me' },
+	args: { tone: 'primary', appearance: 'solid', size: 'sm', children: 'Click me' },
 }
 
 export const Muted: Story = {
-	args: { tone: 'muted', appearance: 'solid', size: 'md', children: 'Click me' },
+	args: { tone: 'muted', appearance: 'solid', size: 'sm', children: 'Click me' },
 }
 
 export const WithIcon: Story = {
-	args: { tone: 'primary', appearance: 'solid', size: 'md', icon: Heart, children: 'Like' },
+	args: { tone: 'primary', appearance: 'solid', size: 'sm', icon: Heart, children: 'Like' },
 }
 
 export const IconOnly: Story = {

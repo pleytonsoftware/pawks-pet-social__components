@@ -70,6 +70,10 @@ const toneAppearanceCompoundVariants = APPEARANCES.flatMap((appearance) =>
 	TONES.map((tone) => ({ appearance, tone, class: TONE_APPEARANCE_CLASSES[appearance][tone] })),
 )
 
+type Size = 'sm' | 'md' | 'lg'
+
+const DEFAULT_SIZE = 'sm' satisfies Size
+
 export const buttonVariants = cva(
 	'inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-40',
 	{
@@ -80,7 +84,7 @@ export const buttonVariants = cva(
 				sm: 'h-8 px-2 py-1.5',
 				md: 'h-9 px-3 py-2',
 				lg: 'h-10 px-4 py-2.5',
-			},
+			} satisfies Record<Size, string>,
 			// Square, padding-free sizing for icon-only buttons (shadcn's
 			// "size: icon" pattern, extended across our own sm/md/lg scale
 			// instead of one fixed size). Real classes live in
@@ -91,11 +95,11 @@ export const buttonVariants = cva(
 		compoundVariants: [
 			...toneAppearanceCompoundVariants,
 			{ appearance: 'link', class: 'h-auto p-0' },
-			{ iconOnly: true, size: 'sm', class: 'w-8 p-0' },
-			{ iconOnly: true, size: 'md', class: 'w-9 p-0' },
-			{ iconOnly: true, size: 'lg', class: 'w-10 p-0' },
+			{ iconOnly: true, size: 'sm' satisfies Size, class: 'w-8 p-0' },
+			{ iconOnly: true, size: 'md' satisfies Size, class: 'w-9 p-0' },
+			{ iconOnly: true, size: 'lg' satisfies Size, class: 'w-10 p-0' },
 		],
-		defaultVariants: { tone: 'primary', appearance: 'solid', size: 'md', iconOnly: false },
+		defaultVariants: { tone: 'primary', appearance: 'solid', size: DEFAULT_SIZE, iconOnly: false },
 	},
 )
 
@@ -113,7 +117,7 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
 		icon?: LucideIcon
 	}
 
-export const Button: FC<ButtonProps> = ({ className, tone, appearance, size = 'md', iconOnly, icon, children, asChild, ...props }) => {
+export const Button: FC<ButtonProps> = ({ className, tone, appearance, size = DEFAULT_SIZE, iconOnly, icon, children, asChild, ...props }) => {
 	if (asChild) {
 		return (
 			<Slot className={cn(buttonVariants({ tone, appearance, size, iconOnly }), className)} {...props}>
@@ -124,7 +128,7 @@ export const Button: FC<ButtonProps> = ({ className, tone, appearance, size = 'm
 
 	return (
 		<button className={cn(buttonVariants({ tone, appearance, size, iconOnly }), className)} {...props}>
-			{icon ? <Icon IconComponent={icon} size={size ?? 'md'} /> : null}
+			{icon ? <Icon IconComponent={icon} size={size ?? DEFAULT_SIZE} /> : null}
 			{iconOnly ? null : children}
 		</button>
 	)
