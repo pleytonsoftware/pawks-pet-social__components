@@ -23,6 +23,7 @@ function ThemeDecorator({ coat, mode, children }: { coat: string; mode: string; 
 }
 
 const preview: Preview = {
+	tags: ['autodocs'],
 	parameters: {
 		controls: {
 			matchers: {

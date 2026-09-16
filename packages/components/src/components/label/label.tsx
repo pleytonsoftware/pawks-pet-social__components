@@ -14,7 +14,7 @@ export type LabelProps = ComponentProps<typeof LabelPrimitive.Root>
 export const Label: FC<LabelProps> = ({ className, ...props }) => (
 	<LabelPrimitive.Root
 		data-slot='label'
-		className={cn('text-label text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-40', className)}
+		className={cn('text-label text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-40 peer-hover:cursor-pointer', className)}
 		{...props}
 	/>
 )
