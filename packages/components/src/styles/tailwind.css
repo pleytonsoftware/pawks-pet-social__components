@@ -187,3 +187,10 @@
 }
 
 @source '../components/**/*.{ts,tsx}';
+
+/**
+ * Force-generate the small fixed set of resize utilities because this package
+ * emits a precompiled stylesheet: consumer-provided class names are not seen
+ * by Tailwind unless they also appear under @source.
+ */
+@source inline('resize-none resize-x resize-y resize-both resize-auto');
