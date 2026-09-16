@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '../fixtures.js'
 
 test.describe('Badge stories', () => {
 	test('default matches screenshot', async ({ page }) => {

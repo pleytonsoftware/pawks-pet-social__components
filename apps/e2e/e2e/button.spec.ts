@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '../fixtures.js'
 
 test.describe('Button stories', () => {
 	test('primary solid matches screenshot', async ({ page }) => {
