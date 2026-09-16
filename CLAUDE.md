@@ -65,3 +65,15 @@ N/A
 <!-- Fill in per project: migration command, rule against direct schema changes without migration. -->
 
 N/A
+
+## Comments / JSdoc
+
+Keep jsdoc / commments to minimum (no more than few lines and if required 1 line per property) so Components are self-explanatory, using multiline comment type.
+
+```ts
+/**
+ * Multiline...
+ * comment...
+ * @property property comment...
+ * */
+```
