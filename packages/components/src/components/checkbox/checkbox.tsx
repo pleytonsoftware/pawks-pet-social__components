@@ -1,42 +1,9 @@
-import type { ComponentProps, ComponentPropsWithRef, FC } from 'react'
+import type { ComponentPropsWithRef, FC } from 'react'
 
 import { cn } from '@/lib/cn.js'
+import { CheckIcon, MinusIcon } from '@/lib/form-icons.js'
 
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
-
-// Hand-authored to match lucide-react's own Check/Minus path data (24x24,
-// 1.75px stroke per §15/§25.6) rather than adding lucide-react as a real
-// dependency here — Icon/Button/IconToggle only import it for types, and
-// actual icon values always come caller-supplied from @pawks/icons.
-const CheckIcon: FC<ComponentProps<'svg'>> = (props) => (
-	<svg
-		viewBox='0 0 24 24'
-		fill='none'
-		stroke='currentColor'
-		strokeWidth={1.75}
-		strokeLinecap='round'
-		strokeLinejoin='round'
-		aria-hidden='true'
-		{...props}
-	>
-		<path d='M20 6 9 17l-5-5' />
-	</svg>
-)
-
-const IndeterminateIcon: FC<ComponentProps<'svg'>> = (props) => (
-	<svg
-		viewBox='0 0 24 24'
-		fill='none'
-		stroke='currentColor'
-		strokeWidth={1.75}
-		strokeLinecap='round'
-		strokeLinejoin='round'
-		aria-hidden='true'
-		{...props}
-	>
-		<path d='M5 12h14' />
-	</svg>
-)
 
 export type CheckboxProps = ComponentPropsWithRef<typeof CheckboxPrimitive.Root>
 
@@ -59,7 +26,7 @@ export const Checkbox: FC<CheckboxProps> = ({ className, ref, ...props }) => (
 	>
 		<CheckboxPrimitive.Indicator className='group flex items-center justify-center text-current'>
 			<CheckIcon className='hidden size-3 group-data-[state=checked]:block' />
-			<IndeterminateIcon className='hidden size-3 group-data-[state=indeterminate]:block' />
+			<MinusIcon className='hidden size-3 group-data-[state=indeterminate]:block' />
 		</CheckboxPrimitive.Indicator>
 	</CheckboxPrimitive.Root>
 )
