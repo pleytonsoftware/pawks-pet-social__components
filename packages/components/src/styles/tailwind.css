@@ -360,4 +360,65 @@
 			animation: none;
 		}
 	}
+
+	/**
+	 * Accordion motion — a third, distinct keyframe family: content expands
+	 * along its own measured size rather than fading/translating like the
+	 * popper or dialog families above. Radix's Collapsible-derived Content
+	 * exposes `--radix-accordion-content-height`/`-width`; vertical is the
+	 * default orientation, horizontal (width-based) rules only apply once
+	 * `data-orientation='horizontal'` adds an extra attribute selector, so
+	 * they naturally out-specificity the vertical rules with no `!important`.
+	 */
+	@keyframes pawks-accordion-down {
+		from {
+			height: 0;
+		}
+		to {
+			height: var(--radix-accordion-content-height);
+		}
+	}
+	@keyframes pawks-accordion-up {
+		from {
+			height: var(--radix-accordion-content-height);
+		}
+		to {
+			height: 0;
+		}
+	}
+	@keyframes pawks-accordion-right {
+		from {
+			width: 0;
+		}
+		to {
+			width: var(--radix-accordion-content-width);
+		}
+	}
+	@keyframes pawks-accordion-left {
+		from {
+			width: var(--radix-accordion-content-width);
+		}
+		to {
+			width: 0;
+		}
+	}
+
+	[data-slot='accordion-content'][data-state='open'] {
+		animation: pawks-accordion-down 150ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+	}
+	[data-slot='accordion-content'][data-state='closed'] {
+		animation: pawks-accordion-up 100ms var(--ease-in-out, cubic-bezier(0.4, 0, 0.2, 1));
+	}
+	[data-slot='accordion-content'][data-orientation='horizontal'][data-state='open'] {
+		animation: pawks-accordion-right 150ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+	}
+	[data-slot='accordion-content'][data-orientation='horizontal'][data-state='closed'] {
+		animation: pawks-accordion-left 100ms var(--ease-in-out, cubic-bezier(0.4, 0, 0.2, 1));
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		[data-slot='accordion-content'][data-state] {
+			animation: none;
+		}
+	}
 }
