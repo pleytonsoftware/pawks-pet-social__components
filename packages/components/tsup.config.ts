@@ -17,5 +17,7 @@ export default defineConfig({
 	clean: true,
 	splitting: false,
 	minify: false,
-	external: ['react', 'react-dom'],
+	// `motion` is a peer dep (tsup externalizes those already), but the bare
+	// name does not cover the `motion/react` subpath the components import.
+	external: ['react', 'react-dom', 'motion', /^motion\//],
 })
