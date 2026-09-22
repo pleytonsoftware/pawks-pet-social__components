@@ -80,7 +80,7 @@ export const RefFocus: Story = {
 			return (
 				<div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
 					<Input ref={inputRef} placeholder='Click the button to focus me' style={{ width: '14rem' }} />
-					<Button size='sm' onClick={() => inputRef.current?.focus()}>
+					<Button size='md' onClick={() => inputRef.current?.focus()}>
 						Focus
 					</Button>
 				</div>

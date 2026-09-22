@@ -60,7 +60,7 @@ export const RefFocus: Story = {
 					</Label>
 					<div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
 						<Input id='email-ref-demo' type='email' placeholder='you@example.com' style={{ width: '14rem' }} />
-						<Button size='sm' onClick={() => labelRef.current?.click()}>
+						<Button size='md' onClick={() => labelRef.current?.click()}>
 							Click label via ref
 						</Button>
 					</div>

@@ -79,7 +79,7 @@
 	--card-foreground: hsl(30 22% 14%); /* #2c241c */
 	--popover: hsl(0 20% 99%); /* #fdfcfc */
 	--popover-foreground: hsl(30 22% 14%); /* #2c241c */
-	--primary: hsl(20 23% 48%); /* #95705e */
+	--primary: hsl(20 23% 45%); /* #8d6a58 */
 	--primary-foreground: hsl(0 20% 99%); /* #fdfcfc */
 	--secondary: hsl(42 9% 45%); /* #7d7769 */
 	--secondary-foreground: hsl(30 20% 2%); /* #060504 */
@@ -89,7 +89,7 @@
 	--accent-foreground: hsl(30 20% 2%); /* #060504 */
 	--border: hsl(33 15% 88%); /* #e5e1dc */
 	--input: hsl(34 20% 53%); /* #9f8a6f */
-	--ring: hsl(20 23% 48%); /* #95705e */
+	--ring: hsl(20 23% 45%); /* #8d6a58 */
 }
 
 [data-coat='abyssinian'].dark {
@@ -146,7 +146,7 @@
 	--secondary-foreground: hsl(30 13% 9%); /* #1a1714 */
 	--muted: hsl(33 10% 18%); /* #322e29 */
 	--muted-foreground: hsl(30 10% 58%); /* #9f9489 */
-	--accent: hsl(27 16% 39%); /* #736254 */
+	--accent: hsl(27 16% 51%); /* #96806e */
 	--accent-foreground: hsl(30 13% 9%); /* #1a1714 */
 	--border: hsl(30 10% 24%); /* #433d37 */
 	--input: hsl(28 10% 39%); /* #6d635a */
@@ -161,7 +161,7 @@
 	--card-foreground: hsl(35 20% 16%); /* #322b21 */
 	--popover: hsl(0 20% 99%); /* #fdfcfc */
 	--popover-foreground: hsl(35 20% 16%); /* #322b21 */
-	--primary: hsl(30 38% 45%); /* #9d7246 */
+	--primary: hsl(30 38% 41%); /* #906941 */
 	--primary-foreground: hsl(0 20% 99%); /* #fdfcfc */
 	--secondary: hsl(34 27% 35%); /* #705c41 */
 	--secondary-foreground: hsl(0 20% 99%); /* #fdfcfc */
@@ -171,7 +171,7 @@
 	--accent-foreground: hsl(35 20% 16%); /* #322b21 */
 	--border: hsl(33 15% 88%); /* #e5e1dc */
 	--input: hsl(35 18% 53%); /* #9d8b72 */
-	--ring: hsl(30 38% 45%); /* #9d7246 */
+	--ring: hsl(30 38% 41%); /* #906941 */
 }
 
 [data-coat='havana-brown'].dark {
@@ -187,7 +187,7 @@
 	--secondary-foreground: hsl(35 20% 16%); /* #322b21 */
 	--muted: hsl(36 16% 24%); /* #473f33 */
 	--muted-foreground: hsl(35 14% 66%); /* #b4aa9c */
-	--accent: hsl(30 20% 45%); /* #8a735c */
+	--accent: hsl(30 20% 57%); /* #a7917b */
 	--accent-foreground: hsl(35 20% 16%); /* #322b21 */
 	--border: hsl(36 18% 30%); /* #5a4f3f */
 	--input: hsl(35 16% 44%); /* #82735e */
@@ -233,7 +233,7 @@
 	--secondary-foreground: hsl(208 15% 17%); /* #262d33 */
 	--muted: hsl(220 11% 22%); /* #32363e */
 	--muted-foreground: hsl(220 8% 63%); /* #999ea8 */
-	--accent: hsl(43 16% 43%); /* #7f755c */
+	--accent: hsl(43 16% 55%); /* #9f947a */
 	--accent-foreground: hsl(208 15% 17%); /* #262d33 */
 	--border: hsl(222 10% 26%); /* #3c4049 */
 	--input: hsl(221 10% 48%); /* #6e7687 */

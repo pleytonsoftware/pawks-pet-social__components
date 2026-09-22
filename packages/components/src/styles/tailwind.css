@@ -194,3 +194,61 @@
  * by Tailwind unless they also appear under @source.
  */
 @source inline('resize-none resize-x resize-y resize-both resize-auto');
+
+/**
+ * Popper enter/exit motion (DESIGN §17), written as plain CSS rather than
+ * utilities: layer rules ship unconditionally, so they survive this package's
+ * precompiled stylesheet. `@layer components` keeps the utilities layer able to
+ * override (e.g. a consumer's `animate-none`). The `var()` fallbacks matter —
+ * Tailwind v4 tree-shakes theme vars that no component class references.
+ */
+@layer components {
+	@keyframes pawks-popper-enter {
+		from {
+			opacity: 0;
+			transform: scale(0.95) translate(var(--pawks-popper-x, 0), var(--pawks-popper-y, 0));
+		}
+		to {
+			opacity: 1;
+			transform: scale(1) translate(0, 0);
+		}
+	}
+
+	@keyframes pawks-popper-exit {
+		from {
+			opacity: 1;
+			transform: scale(1);
+		}
+		to {
+			opacity: 0;
+			transform: scale(0.95);
+		}
+	}
+
+	/* Slide direction follows the side Radix actually resolved to. */
+	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'])[data-side='bottom'] {
+		--pawks-popper-y: -0.5rem;
+	}
+	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'])[data-side='top'] {
+		--pawks-popper-y: 0.5rem;
+	}
+	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'])[data-side='right'] {
+		--pawks-popper-x: -0.5rem;
+	}
+	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'])[data-side='left'] {
+		--pawks-popper-x: 0.5rem;
+	}
+
+	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'])[data-state='open'] {
+		animation: pawks-popper-enter 150ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+	}
+	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'])[data-state='closed'] {
+		animation: pawks-popper-exit 100ms var(--ease-in-out, cubic-bezier(0.4, 0, 0.2, 1));
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'])[data-state] {
+			animation: none;
+		}
+	}
+}

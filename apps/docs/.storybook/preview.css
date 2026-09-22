@@ -9,3 +9,10 @@ body {
 		background-color 150ms,
 		color 150ms;
 }
+
+/* Keeps stories off the viewport edges. Radix's collision detection measures
+   against the viewport, so a flush-left trigger would clamp its centered
+   popover to x=0 and make it look mis-anchored. Benefits every portal atom. */
+#storybook-root {
+	padding: 3rem;
+}

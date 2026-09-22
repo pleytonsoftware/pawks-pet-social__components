@@ -5,7 +5,7 @@ import { Heart } from '@pawks/icons'
 
 const TONES: NonNullable<ButtonProps['tone']>[] = ['primary', 'secondary', 'muted', 'accent', 'destructive', 'success', 'warning', 'info']
 const APPEARANCES: NonNullable<ButtonProps['appearance']>[] = ['solid', 'outline', 'ghost', 'link']
-const SIZES: NonNullable<ButtonProps['size']>[] = ['sm', 'md', 'lg']
+const SIZES: NonNullable<ButtonProps['size']>[] = ['xs', 'sm', 'md', 'lg']
 
 const meta: Meta<typeof Button> = {
 	title: 'Atoms/Button',

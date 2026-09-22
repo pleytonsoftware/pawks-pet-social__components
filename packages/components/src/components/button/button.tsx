@@ -1,7 +1,7 @@
 import type { LucideIcon } from 'lucide-react'
 import type { ButtonHTMLAttributes, FC } from 'react'
 
-import { Icon } from '@/components/icon/icon.js'
+import { Icon, type IconProps } from '@/components/icon/icon.js'
 import { cn } from '@/lib/cn.js'
 
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -26,15 +26,20 @@ const TONE_APPEARANCE_CLASSES = {
 		warning: 'bg-warning text-warning-foreground hover:bg-warning-hover',
 		info: 'bg-info text-info-foreground hover:bg-info-hover',
 	},
+	// Resting background is a neutral --input tint (not fully transparent, per
+	// DESIGN §22) so outline buttons read as a raised control rather than a
+	// hole in the page — same class works in light and dark since --input is
+	// already theme-aware per coat.
 	outline: {
-		primary: 'border border-primary text-primary bg-transparent hover:bg-primary hover:text-primary-foreground',
-		secondary: 'border border-secondary text-secondary bg-transparent hover:bg-secondary hover:text-secondary-foreground',
-		muted: 'border border-border text-muted-foreground bg-transparent hover:bg-muted hover:text-muted-foreground',
-		accent: 'border border-accent text-accent bg-transparent hover:bg-accent hover:text-accent-foreground',
-		destructive: 'border border-destructive text-destructive bg-transparent hover:bg-destructive hover:text-destructive-foreground',
-		success: 'border border-success text-success bg-transparent hover:bg-success hover:text-success-foreground',
-		warning: 'border border-warning text-warning bg-transparent hover:bg-warning hover:text-warning-foreground',
-		info: 'border border-info text-info bg-transparent hover:bg-info hover:text-info-foreground',
+		primary: 'border border-primary text-primary bg-background dark:bg-input/20 hover:bg-primary hover:text-primary-foreground',
+		secondary: 'border border-secondary text-secondary bg-background dark:bg-input/20 hover:bg-secondary hover:text-secondary-foreground',
+		muted: 'border border-border text-muted-foreground bg-background dark:bg-input/20 hover:bg-muted hover:text-muted-foreground',
+		accent: 'border border-accent text-accent bg-background dark:bg-background dark:bg-input/20 hover:bg-accent hover:text-accent-foreground',
+		destructive:
+			'border border-destructive text-destructive bg-background dark:bg-input/20 hover:bg-destructive hover:text-destructive-foreground',
+		success: 'border border-success text-success bg-background dark:bg-input/20 hover:bg-success hover:text-success-foreground',
+		warning: 'border border-warning text-warning bg-background dark:bg-input/20 hover:bg-warning hover:text-warning-foreground',
+		info: 'border border-info text-info bg-background dark:bg-input/20 hover:bg-info hover:text-info-foreground',
 	},
 	ghost: {
 		primary: 'text-primary bg-transparent hover:bg-primary/10',
@@ -70,23 +75,31 @@ const toneAppearanceCompoundVariants = APPEARANCES.flatMap((appearance) =>
 	TONES.map((tone) => ({ appearance, tone, class: TONE_APPEARANCE_CLASSES[appearance][tone] })),
 )
 
-type Size = 'sm' | 'md' | 'lg'
+type Size = 'xs' | 'sm' | 'md' | 'lg'
 
-const DEFAULT_SIZE = 'sm' satisfies Size
+const DEFAULT_SIZE = 'md' satisfies Size
+
+// Icon's own `size` prop is keyed by name (sm→16px, md→20px…), not by pixel
+// height — a straight passthrough of Button's size would silently regrow
+// the default button's icon, since old-sm's 16px icon becomes new-md.
+const ICON_SIZE_BY_BUTTON_SIZE = { xs: 'xs', sm: 'sm', md: 'sm', lg: 'md' } as const satisfies Record<Size, IconProps['size']>
 
 export const buttonVariants = cva(
-	'inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-40',
+	'inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-40 hover:cursor-pointer',
 	{
 		variants: {
 			tone: emptyVariantMap(TONES),
 			appearance: emptyVariantMap(APPEARANCES),
+			// No `py-*`: the base class is already `items-center`, so a fixed
+			// height plus flex centering places content correctly on its own.
 			size: {
-				sm: 'h-8 px-2 py-1.5',
-				md: 'h-9 px-3 py-2',
-				lg: 'h-10 px-4 py-2.5',
+				xs: 'h-6 px-2 text-caption',
+				sm: 'h-7 px-2.5 text-small',
+				md: 'h-8 px-2.5 text-body',
+				lg: 'h-9 px-2.5 text-body',
 			} satisfies Record<Size, string>,
 			// Square, padding-free sizing for icon-only buttons (shadcn's
-			// "size: icon" pattern, extended across our own sm/md/lg scale
+			// "size: icon" pattern, extended across our own xs/sm/md/lg scale
 			// instead of one fixed size). Real classes live in
 			// compoundVariants below; empty here purely so cva/VariantProps
 			// knows `iconOnly` is a valid boolean prop.
@@ -95,9 +108,10 @@ export const buttonVariants = cva(
 		compoundVariants: [
 			...toneAppearanceCompoundVariants,
 			{ appearance: 'link', class: 'h-auto p-0' },
-			{ iconOnly: true, size: 'sm' satisfies Size, class: 'w-8 p-0' },
-			{ iconOnly: true, size: 'md' satisfies Size, class: 'w-9 p-0' },
-			{ iconOnly: true, size: 'lg' satisfies Size, class: 'w-10 p-0' },
+			{ iconOnly: true, size: 'xs' satisfies Size, class: 'w-6 p-0' },
+			{ iconOnly: true, size: 'sm' satisfies Size, class: 'w-7 p-0' },
+			{ iconOnly: true, size: 'md' satisfies Size, class: 'w-8 p-0' },
+			{ iconOnly: true, size: 'lg' satisfies Size, class: 'w-9 p-0' },
 		],
 		defaultVariants: { tone: 'primary', appearance: 'solid', size: DEFAULT_SIZE, iconOnly: false },
 	},
@@ -128,7 +142,7 @@ export const Button: FC<ButtonProps> = ({ className, tone, appearance, size = DE
 
 	return (
 		<button className={cn(buttonVariants({ tone, appearance, size, iconOnly }), className)} {...props}>
-			{icon ? <Icon IconComponent={icon} size={size ?? DEFAULT_SIZE} /> : null}
+			{icon ? <Icon IconComponent={icon} size={ICON_SIZE_BY_BUTTON_SIZE[size ?? DEFAULT_SIZE]} /> : null}
 			{iconOnly ? null : children}
 		</button>
 	)

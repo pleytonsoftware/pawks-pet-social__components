@@ -400,7 +400,7 @@ Anchors: `#cbb292` `#7d7769` `#baad79` `#95705e`
 | foreground / card-fg / popover-fg | `#2c241c` | `#ebe6e0` |
 | muted | `#cbb292` | `#342e27` |
 | muted-foreground | `#514538` | `#a59583` |
-| primary | `#95705e` | `#a8765d` |
+| primary | `#8d6a58` | `#a8765d` |
 | primary-foreground | `#fdfcfc` | `#1b1713` |
 | secondary | `#7d7769` | `#89806c` |
 | secondary-foreground | `#060504` | `#1b1713` |
@@ -408,7 +408,7 @@ Anchors: `#cbb292` `#7d7769` `#baad79` `#95705e`
 | accent-foreground | `#060504` | `#1b1713` |
 | border | `#e5e1dc` | `#463e35` |
 | input | `#9f8a6f` | `#706251` |
-| ring | `#95705e` | `#a8765d` |
+| ring | `#8d6a58` | `#a8765d` |
 
 ### 8.6 Coat 3 — Maine Coon
 
@@ -425,7 +425,7 @@ Anchors: `#827c72` `#554b3f` `#707e74` `#8c7058`
 | primary-foreground | `#fdfcfc` | `#1a1714` |
 | secondary | `#707e74` | `#6e8775` |
 | secondary-foreground | `#fdfcfc` | `#1a1714` |
-| accent | `#eae3dc` | `#736254` |
+| accent | `#eae3dc` | `#96806e` |
 | accent-foreground | `#554b3f` | `#1a1714` |
 | border | `#e4e1dd` | `#433d37` |
 | input | `#9a8b79` | `#6d635a` |
@@ -442,15 +442,15 @@ Anchors: `#322b21` `#705c41` `#9d7246` `#979272`
 | foreground / card-fg / popover-fg | `#322b21` | `#ccc3b8` |
 | muted | `#979272` | `#473f33` |
 | muted-foreground | `#2f2a23` | `#b4aa9c` |
-| primary | `#9d7246` | `#b68c63` |
+| primary | `#906941` | `#b68c63` |
 | primary-foreground | `#fdfcfc` | `#322b21` |
 | secondary | `#705c41` | `#a89071` |
 | secondary-foreground | `#fdfcfc` | `#322b21` |
-| accent | `#b69677` | `#8a735c` |
+| accent | `#b69677` | `#a7917b` |
 | accent-foreground | `#322b21` | `#322b21` |
 | border | `#e5e1dc` | `#5a4f3f` |
 | input | `#9d8b72` | `#82735e` |
-| ring | `#9d7246` | `#b68c63` |
+| ring | `#906941` | `#b68c63` |
 
 ### 8.8 Coat 5 — Bombay
 
@@ -467,7 +467,7 @@ Anchors: `#303032` `#262d33` `#66725c` `#9a875c`
 | primary-foreground | `#22201c` | `#262d33` |
 | secondary | `#66725c` | `#88987c` |
 | secondary-foreground | `#fcfcfd` | `#262d33` |
-| accent | `#a79a7b` | `#7f755c` |
+| accent | `#a79a7b` | `#9f947a` |
 | accent-foreground | `#262d33` | `#262d33` |
 | border | `#dddfe4` | `#3c4049` |
 | input | `#828ca1` | `#6e7687` |
@@ -798,7 +798,7 @@ States should use a combination of:
 
 Never rely exclusively on color to communicate state.
 
-Reference treatment (see `Button`, §30): hover = ~7% lightness shift toward darker (light mode) / lighter (dark mode) on the same hue; focus = `ring` token as a 3px offset shadow; disabled = 40% opacity, not a separate color.
+Reference treatment (see `Button`, §30): hover = ~7% lightness shift toward darker (light mode) / lighter (dark mode) on the same hue; focus = `ring` token as a 3px offset shadow; disabled = 40% opacity, not a separate color; an `outline`-appearance control's resting background is a neutral `input` tint (e.g. `bg-input/20`), never fully transparent — it should read as a raised control, not a hole in the page — with a full tone fill on hover.
 
 ---
 
@@ -868,19 +868,26 @@ Base unit 4px: `4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80`.
 
 Controls are compact by default — a control's size tracks its own content; it does not grow just because it shares the type scale with larger text (see §14).
 
-Heights: `sm 32px` · `md 36px` · `lg 40px`. `md` is the default control height.
+Heights: `sm 32px` · `md 36px` · `lg 40px`. `md` is the default control height. This
+shared 3-step scale is what Input/Select/NativeSelect follow; **Button has its own
+4-tier scale** (below) sized for a denser range of UI chrome, from inline icon-buttons
+up through primary actions.
 
 Per-component convention (extend this pattern to future controls rather than inventing new ratios per component):
 
 | Component | Font size | Height | Padding-x | Padding-y |
 |---|---|---|---|---|
-| Button — sm | 14px | 32px | 8px | 6px |
-| Button — md (default) | 14px | 36px | 12px | 8px |
-| Button — lg | 14px | 40px | 16px | 10px |
+| Button — xs | 12px | 24px | 8px | — |
+| Button — sm | 13px | 28px | 10px | — |
+| Button — md (default) | 14px | 32px | 10px | — |
+| Button — lg | 14px | 36px | 10px | — |
 | Badge | 12px | 24px | 8px | — |
 | Input | 14px | 36px | 10px | — |
 
-`lg` (40px) is the size to reach for when touch-target size matters more than density (primary mobile actions). The default (`md`, 36px) does not by itself meet the 44px touch-target minimum — where tap accuracy matters, pair it with adequate surrounding tap-area spacing rather than inflating the control itself (see §20).
+Button has no `padding-y` at any size — its base layout is already `items-center`, so a
+fixed height plus flex centering places content correctly without vertical padding.
+
+`lg` (36px) is the Button size to reach for when touch-target size matters more than density (primary mobile actions). The default (`md`, 32px) does not by itself meet the 44px touch-target minimum — where tap accuracy matters, pair it with adequate surrounding tap-area spacing rather than inflating the control itself (see §20).
 
 ### 25.5 Borders & elevation
 

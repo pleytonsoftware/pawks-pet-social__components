@@ -31,4 +31,4 @@ export const test = base.extend<object>({
 	},
 })
 
-export { expect }
+export { expect, type Page }
