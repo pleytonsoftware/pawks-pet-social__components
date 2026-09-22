@@ -7,15 +7,12 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 
-// A menu/action primitive ("Which action?"), not a value picker like
-// Select ("Which value?") — see this folder's own stories for the two
-// side by side. Thin Radix composition: Radix owns open/close,
-// positioning, portals, keyboard nav, typeahead, and submenu state; this
-// only styles via `data-*`. No `items` prop — compose children instead.
-// Enter/exit motion lives in styles/tailwind.css, keyed off `data-slot` +
-// `data-state`, so it ships with the precompiled stylesheet.
-
 export type DropdownMenuProps = ComponentProps<typeof DropdownMenuPrimitive.Root>
+/**
+ * A menu/action primitive ("Which action?"), not a value picker like
+ * Select ("Which value?"). No `items` prop — compose children instead.
+ * Enter/exit motion lives in styles/tailwind.css, keyed off `data-slot`/`data-state`.
+ */
 export const DropdownMenu: FC<DropdownMenuProps> = (props) => <DropdownMenuPrimitive.Root data-slot='dropdown-menu' {...props} />
 
 export type DropdownMenuTriggerProps = ComponentPropsWithRef<typeof DropdownMenuPrimitive.Trigger>

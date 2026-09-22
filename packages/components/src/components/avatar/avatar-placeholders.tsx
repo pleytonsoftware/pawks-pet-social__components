@@ -2,17 +2,15 @@ import type { ComponentProps, FC } from 'react'
 
 import { cn } from '@/lib/cn.js'
 
-// Exploratory: filled-silhouette fallback content for AvatarFallback,
-// alongside the icon-reuse style demoed in stories (Icon + UserRound/
-// PawPrint from @pawks/icons). Deliberately a design-system exception to
-// §15's stroke-only icon convention — kept as separate opt-in content
-// rather than a prop on AvatarFallback itself, pending a decision on
-// which style to keep. `fill="currentColor"` means these inherit
-// AvatarFallback's `text-muted-foreground` automatically, so they theme
-// correctly across every coat/mode with no extra work.
-
 export type AvatarFallbackPersonImageProps = ComponentProps<'svg'>
 
+/**
+ * Filled-silhouette fallback content for AvatarFallback, composed as
+ * separate opt-in content rather than a prop on AvatarFallback itself —
+ * a deliberate exception to §15's stroke-only icon convention.
+ * `fill="currentColor"` inherits AvatarFallback's `text-muted-foreground`,
+ * theming correctly across every coat/mode automatically.
+ */
 export const AvatarFallbackPersonImage: FC<AvatarFallbackPersonImageProps> = ({ className, ...props }) => (
 	<svg viewBox='0 0 24 24' fill='currentColor' className={cn('size-full', className)} aria-hidden='true' {...props}>
 		<circle cx='12' cy='8' r='4' />
@@ -22,6 +20,13 @@ export const AvatarFallbackPersonImage: FC<AvatarFallbackPersonImageProps> = ({ 
 
 export type AvatarFallbackPetImageProps = ComponentProps<'svg'>
 
+/**
+ * Filled-silhouette fallback content for AvatarFallback, composed as
+ * separate opt-in content rather than a prop on AvatarFallback itself —
+ * a deliberate exception to §15's stroke-only icon convention.
+ * `fill="currentColor"` inherits AvatarFallback's `text-muted-foreground`,
+ * theming correctly across every coat/mode automatically.
+ */
 export const AvatarFallbackCatImage: FC<AvatarFallbackPetImageProps> = ({ className, ...props }) => (
 	<svg
 		viewBox='0 0 24 24'
@@ -76,6 +81,14 @@ export const AvatarFallbackCatImage: FC<AvatarFallbackPetImageProps> = ({ classN
 		/>
 	</svg>
 )
+
+/**
+ * Filled-silhouette fallback content for AvatarFallback, composed as
+ * separate opt-in content rather than a prop on AvatarFallback itself —
+ * a deliberate exception to §15's stroke-only icon convention.
+ * `fill="currentColor"` inherits AvatarFallback's `text-muted-foreground`,
+ * theming correctly across every coat/mode automatically.
+ */
 export const AvatarFallbackDogImage: FC<AvatarFallbackPetImageProps> = ({ className, ...props }) => (
 	<svg
 		viewBox='0 0 24 24'

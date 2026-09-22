@@ -4,19 +4,15 @@ import { cn } from '@/lib/cn.js'
 
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 
-// Supplementary, non-interactive information only — not a general-purpose
-// popup. For richer or interactive content, use Popover instead. Radix owns
-// open/close timing, hover/focus interaction, positioning, collision
-// detection, and accessibility; this only styles via `data-*`. Every
-// `Tooltip` must have a `TooltipProvider` ancestor (Radix throws otherwise) —
-// apps/docs wraps every story with one globally, the way a real app wraps
-// its root once. Enter/exit motion is shared with DropdownMenu/Select via
-// `[data-slot='tooltip-content']` in styles/tailwind.css.
-
 export type TooltipProviderProps = ComponentProps<typeof TooltipPrimitive.Provider>
 export const TooltipProvider: FC<TooltipProviderProps> = (props) => <TooltipPrimitive.Provider data-slot='tooltip-provider' {...props} />
 
 export type TooltipProps = ComponentProps<typeof TooltipPrimitive.Root>
+/**
+ * Supplementary, non-interactive information only — not a general-purpose
+ * popup (use Popover for richer/interactive content). Every `Tooltip` needs
+ * a `TooltipProvider` ancestor; Radix throws otherwise.
+ */
 export const Tooltip: FC<TooltipProps> = (props) => <TooltipPrimitive.Root data-slot='tooltip' {...props} />
 
 export type TooltipTriggerProps = ComponentPropsWithRef<typeof TooltipPrimitive.Trigger>

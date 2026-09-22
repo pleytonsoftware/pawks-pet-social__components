@@ -4,18 +4,13 @@ import { cn } from '@/lib/cn.js'
 
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card'
 
-// A contextual preview shown on hover/focus of a trigger — richer than
-// Tooltip (arbitrary composed content, not just short text) but still
-// non-interactive-by-convention, unlike Popover. No Provider primitive,
-// unlike Tooltip: `openDelay`/`closeDelay` are plain Root props (Radix
-// defaults: 700ms/300ms). Radix owns hover/focus timing, positioning,
-// collision detection, and portal/accessibility behavior; this only styles
-// via `data-*`. Enter/exit motion is shared with DropdownMenu/Tooltip via
-// `[data-slot='hover-card-content']` in styles/tailwind.css — Radix's own
-// `data-state` here is plain "open"/"closed", unlike Tooltip's
-// "delayed-open"/"instant-open" variants.
-
 export type HoverCardProps = ComponentProps<typeof HoverCardPrimitive.Root>
+/**
+ * A contextual preview on hover/focus — richer than Tooltip (arbitrary
+ * composed content, not just short text), non-interactive-by-convention unlike Popover.
+ * No Provider, unlike Tooltip: `openDelay`/`closeDelay` are plain Root props.
+ * `data-state` here is plain "open"/"closed", unlike Tooltip's "delayed-open"/"instant-open".
+ */
 export const HoverCard: FC<HoverCardProps> = (props) => <HoverCardPrimitive.Root data-slot='hover-card' {...props} />
 
 export type HoverCardTriggerProps = ComponentPropsWithRef<typeof HoverCardPrimitive.Trigger>

@@ -6,14 +6,14 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@/lib/form-icons.js'
 
 import * as SelectPrimitive from '@radix-ui/react-select'
 
-// Thin Radix composition — Radix owns open/close, positioning, portals,
-// typeahead, keyboard nav and selection; this only styles via `data-*`.
-// No enter/exit animation on SelectContent: Radix unmounts it by default,
-// and animating that correctly needs either `forceMount` coordination or
-// a plugin (`tailwindcss-animate`) this repo doesn't otherwise depend on —
-// not worth adding for one component. It opens/closes instantly instead.
-
 export type SelectProps = ComponentProps<typeof SelectPrimitive.Root>
+/**
+ * Thin Radix composition — Radix owns open/close, positioning, typeahead,
+ * keyboard nav, and selection. SelectContent has no enter/exit animation
+ * (opens/closes instantly): Radix unmounts it by default, and animating
+ * that needs `forceMount` coordination or a plugin this repo doesn't
+ * otherwise depend on — not worth adding for one component.
+ */
 export const Select: FC<SelectProps> = (props) => <SelectPrimitive.Root data-slot='select' {...props} />
 
 export type SelectGroupProps = ComponentProps<typeof SelectPrimitive.Group>

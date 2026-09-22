@@ -2,14 +2,14 @@ import type { ComponentPropsWithRef, FC } from 'react'
 
 import { cn } from '@/lib/cn.js'
 
-// A static content container — never inherently clickable (compose an <a>
-// or Button inside instead of an `href`/`onClick` on Card itself). Sections
-// share one `--card-spacing` custom property set on the root (DESIGN §12:
-// border-led, no shadow), so overriding it once via `className` re-syncs
-// every child's inset/gap together.
-
 export type CardProps = ComponentPropsWithRef<'div'> & { size?: 'default' | 'sm' }
 
+/**
+ * A static content container — never inherently clickable (compose an
+ * `<a>`/Button inside instead of an `href`/`onClick` on Card itself).
+ * Sections share one `--card-spacing` custom property set on the root
+ * (DESIGN §12), so overriding it via `className` re-syncs every child's inset/gap together.
+ */
 export const Card: FC<CardProps> = ({ className, size = 'default', ref, ...props }) => (
 	<div
 		ref={ref}

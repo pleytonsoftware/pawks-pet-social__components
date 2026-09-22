@@ -4,14 +4,13 @@ import { cn } from '@/lib/cn.js'
 import { FORM_CONTROL_BASE_CLASSES } from '@/lib/form-control-classes.js'
 import { ChevronDownIcon } from '@/lib/form-icons.js'
 
-/**
- * A real native `<select>` — not a Radix emulation. For richer/custom
- * dropdown UX, use `Select` instead; the two are conceptually
- * interchangeable (both slot into `Field`) but not API-compatible on
- * purpose — see the Select ticket's own rationale.
- */
 export type NativeSelectProps = ComponentPropsWithRef<'select'>
 
+/**
+ * A real native `<select>` — not a Radix emulation. For richer/custom
+ * dropdown UX, use `Select` instead; the two slot into `Field`
+ * interchangeably but are deliberately not API-compatible.
+ */
 export const NativeSelect: FC<NativeSelectProps> = ({ className, children, ref, ...props }) => (
 	// Grid overlay, not absolute positioning: both children share one grid
 	// cell (`*:col-start-1 *:row-start-1`), so the wrapper's size always

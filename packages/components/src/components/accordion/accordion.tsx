@@ -4,16 +4,14 @@ import { cn } from '@/lib/cn.js'
 
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 
-// A composable expandable-content list — five separate parts (Root, Item,
-// Header, Trigger, Content), matching raw Radix's own shape rather than
-// bundling Header into Trigger. Radix owns single/multiple selection state,
-// keyboard navigation, focus management, collapsible behavior, orientation,
-// and accessibility; this only styles via `data-*`. No default icon is
-// rendered inside the trigger — consumers compose their own (see stories) —
-// so `[data-state=open]>svg` styling hooks work generically for whichever
-// icon a consumer places, without this component dictating one.
-
 export type AccordionProps = ComponentPropsWithRef<typeof AccordionPrimitive.Root>
+/**
+ * Composable expandable-content list — five parts matching raw Radix's own
+ * shape (Root, Item, Header, Trigger, Content) rather than bundling Header
+ * into Trigger. Radix owns selection, keyboard nav, and accessibility.
+ * No default trigger icon — consumers compose their own; `[data-state=open]>svg`
+ * styling hooks work generically for whichever icon is placed.
+ */
 export const Accordion: FC<AccordionProps> = ({ ref, ...props }) => <AccordionPrimitive.Root ref={ref} data-slot='accordion' {...props} />
 
 export type AccordionItemProps = ComponentPropsWithRef<typeof AccordionPrimitive.Item>

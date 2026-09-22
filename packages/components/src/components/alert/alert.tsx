@@ -4,15 +4,6 @@ import { cn } from '@/lib/cn.js'
 
 import { cva, type VariantProps } from 'class-variance-authority'
 
-// Persistent inline feedback — not a toast, not a modal. No default role:
-// static informational content doesn't need assertive announcement
-// semantics by default; pass `role='alert'`/`role='status'` per DESIGN §20
-// when the content genuinely warrants it. Dismissal is composed externally
-// (e.g. AlertAction + a ghost icon Button) — this primitive owns no
-// open/close state. The grid auto-reserves an icon column only when an
-// `<svg>` is a direct child (`has-[>svg]:`), and right-padding only when an
-// AlertAction is present — no icon/action-related props needed.
-
 export const alertVariants = cva(
 	cn(
 		'relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border border-border bg-card px-4 py-3 text-body text-card-foreground',
@@ -32,6 +23,11 @@ export const alertVariants = cva(
 
 export type AlertProps = ComponentPropsWithRef<'div'> & VariantProps<typeof alertVariants>
 
+/**
+ * Persistent inline feedback — not a toast, not a modal.
+ * No default `role`; pass `role='alert'`/`role='status'` (DESIGN §20) when warranted.
+ * Icon column and action padding reserve themselves automatically (`has-[>svg]`/`has-[[data-slot=alert-action]]`) — no icon/action props needed.
+ */
 export const Alert: FC<AlertProps> = ({ className, variant, ref, ...props }) => (
 	<div ref={ref} data-slot='alert' className={cn(alertVariants({ variant }), className)} {...props} />
 )

@@ -4,44 +4,22 @@ import { Toaster as SonnerToaster, toast, useSonner } from 'sonner'
 
 import { PawLoader } from '../paw-loader/paw-loader.js'
 
-// A thin design-system adapter, not a behavioral primitive — unlike every
-// Radix/Base UI wrapper in this library, Sonner owns 100% of toast state,
-// lifecycle, stacking, timers, promise handling, positioning, and
-// accessibility. This component's only job is visual integration: mapping
-// Sonner's own CSS custom properties onto this design system's tokens.
-// `toast`/`useSonner` are re-exported verbatim (no wrapping, no altered
-// behavior) purely so consumers don't need `sonner` as a second direct
-// dependency alongside `@pawks/components` — application code still uses
-// Sonner's own imperative API exactly as Sonner documents it:
-// `toast('Saved')`, `toast.success(...)`, `toast.promise(...)`.
-//
-// No `data-slot` wrapper: Sonner's own `Toaster` destructures every prop by
-// name with no `...rest` spread, so an unrecognized attribute like
-// `data-slot` would never reach its rendered DOM node anyway — and adding
-// an extra wrapping `<div>` purely to plant one is exactly the kind of
-// superfluous wrapping this component should avoid. `[data-sonner-toaster]`
-// (Sonner's own attribute) is the correct, already-exposed query hook.
-//
-// No theme-detection effect: rather than syncing Sonner's own `theme` prop
-// to this project's `.dark`-class-based dark mode (which would need a
-// MutationObserver — real React state for what's ultimately a styling
-// concern), every color below is a `var(...)` reference to this project's
-// own tokens, which already update live under `.dark` with zero JS. Two
-// spots in Sonner's injected stylesheet are hardcoded hex values with no
-// corresponding CSS variable at all (description text color, close-button
-// colors) — those are overridden directly in tailwind.css instead, since no
-// amount of `style`-prop CSS-var mapping can reach a property Sonner never
-// parameterized to begin with.
-//
-// `richColors` defaults to `true` (Sonner's own default is `false`): the
-// `--success-*`/`--info-*`/`--warning-*`/`--error-*` vars below only apply
-// once a toast has Sonner's own `data-rich-colors="true"`, so without this
-// default `toast.success(...)`/`.error(...)` would render visually
-// identical to a plain `toast(...)` — just a different icon. Still fully
-// overridable per the ticket's own "expose Sonner's concept, don't invent a
-// new one" principle: a consumer can pass `richColors={false}` themselves.
 export type ToasterProps = ComponentPropsWithRef<typeof SonnerToaster>
 
+/**
+ * A thin design-system adapter, not a behavioral primitive — Sonner owns
+ * 100% of toast state, lifecycle, and accessibility; this only maps
+ * Sonner's CSS variables onto our tokens. `toast`/`useSonner` are
+ * re-exported verbatim so consumers don't need `sonner` as a second direct
+ * dependency. No `data-slot` wrapper: Sonner's `Toaster` has no `...rest`
+ * spread, so use its own `[data-sonner-toaster]` attribute instead.
+ * No theme-detection effect: every color is a live `var(...)` reference
+ * that already updates under `.dark` with zero JS — two spots with no
+ * corresponding CSS variable (description/close-button colors) are
+ * overridden directly in tailwind.css instead. `richColors` defaults to
+ * `true` (Sonner's own default is `false`) so `toast.success()`/`.error()`
+ * actually render with distinct colors, not just a different icon.
+ */
 export const Toaster: FC<ToasterProps> = ({ style, richColors = true, icons, ...props }) => (
 	<SonnerToaster
 		richColors={richColors}

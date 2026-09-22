@@ -6,13 +6,12 @@ import { XIcon } from '@/lib/form-icons.js'
 
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 
-// General-purpose modal — forms, settings, editing, contextual detail. For a
-// confirmation the user must explicitly acknowledge, use AlertDialog
-// instead (a distinct Radix primitive, not a styling variant of this one).
-// Radix owns open/close, focus trapping/restoration, Escape, outside
-// interaction, and portal/accessibility behavior; this only styles via `data-*`.
-
 export type DialogProps = ComponentProps<typeof DialogPrimitive.Root>
+/**
+ * General-purpose modal — forms, settings, editing, contextual detail.
+ * For a confirmation the user must explicitly acknowledge, use AlertDialog
+ * instead (a distinct Radix primitive, not a styling variant of this one).
+ */
 export const Dialog: FC<DialogProps> = (props) => <DialogPrimitive.Root data-slot='dialog' {...props} />
 
 export type DialogTriggerProps = ComponentPropsWithRef<typeof DialogPrimitive.Trigger>

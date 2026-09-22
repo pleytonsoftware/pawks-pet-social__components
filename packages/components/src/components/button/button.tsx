@@ -26,10 +26,7 @@ const TONE_APPEARANCE_CLASSES = {
 		warning: 'bg-warning text-warning-foreground hover:bg-warning-hover',
 		info: 'bg-info text-info-foreground hover:bg-info-hover',
 	},
-	// Resting background is a neutral --input tint (not fully transparent, per
-	// DESIGN §22) so outline buttons read as a raised control rather than a
-	// hole in the page — same class works in light and dark since --input is
-	// already theme-aware per coat.
+	/** Resting background is a neutral `--input` tint (DESIGN §22), not fully transparent, so it reads as a raised control. */
 	outline: {
 		primary: 'border border-primary text-primary bg-background dark:bg-input/20 hover:bg-primary hover:text-primary-foreground',
 		secondary: 'border border-secondary text-secondary bg-background dark:bg-input/20 hover:bg-secondary hover:text-secondary-foreground',
@@ -79,9 +76,7 @@ type Size = 'xs' | 'sm' | 'md' | 'lg'
 
 const DEFAULT_SIZE = 'md' satisfies Size
 
-// Icon's own `size` prop is keyed by name (sm→16px, md→20px…), not by pixel
-// height — a straight passthrough of Button's size would silently regrow
-// the default button's icon, since old-sm's 16px icon becomes new-md.
+/** Icon's `size` prop is keyed by name, not pixels — a straight passthrough of Button's size would silently regrow the icon on a size rename. */
 const ICON_SIZE_BY_BUTTON_SIZE = { xs: 'xs', sm: 'sm', md: 'sm', lg: 'md' } as const satisfies Record<Size, IconProps['size']>
 
 export const buttonVariants = cva(
@@ -90,19 +85,14 @@ export const buttonVariants = cva(
 		variants: {
 			tone: emptyVariantMap(TONES),
 			appearance: emptyVariantMap(APPEARANCES),
-			// No `py-*`: the base class is already `items-center`, so a fixed
-			// height plus flex centering places content correctly on its own.
+			/** No `py-*`: flex `items-center` plus a fixed height already centers content. */
 			size: {
 				xs: 'h-6 px-2 text-caption',
 				sm: 'h-7 px-2.5 text-small',
 				md: 'h-8 px-2.5 text-body',
 				lg: 'h-9 px-2.5 text-body',
 			} satisfies Record<Size, string>,
-			// Square, padding-free sizing for icon-only buttons (shadcn's
-			// "size: icon" pattern, extended across our own xs/sm/md/lg scale
-			// instead of one fixed size). Real classes live in
-			// compoundVariants below; empty here purely so cva/VariantProps
-			// knows `iconOnly` is a valid boolean prop.
+			/** Real classes live in `compoundVariants` below — empty here purely so cva/VariantProps knows `iconOnly` is a valid boolean prop. */
 			iconOnly: { true: '', false: '' },
 		},
 		compoundVariants: [

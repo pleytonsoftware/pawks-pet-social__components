@@ -9,12 +9,11 @@ import * as TogglePrimitive from '@radix-ui/react-toggle'
 
 import { Icon } from '../icon/icon.js'
 
-// Same semantic tones as Button/Avatar — kept as an explicit lookup (not
-// template-literal interpolation) so every class name stays a literal
-// string for Tailwind's scanner to find. `muted` has no dedicated ink
-// "-hover" token (unlike the others, whose `-hover` tokens are lightness
-// shifts of a *fill* color) — see Button's outline/ghost `muted` cells for
-// the same reasoning — so it reuses `text-muted-foreground` on hover too.
+/**
+ * Same semantic tones as Button/Avatar — an explicit lookup, not template-literal
+ * interpolation, so every class name stays literal for Tailwind's scanner.
+ * `muted` has no dedicated "-hover" ink token, so it reuses `text-muted-foreground` on hover.
+ */
 const TONE_CLASSES = {
 	primary: 'hover:text-primary data-[state=on]:text-primary data-[state=on]:hover:text-primary-hover',
 	secondary: 'hover:text-secondary data-[state=on]:text-secondary data-[state=on]:hover:text-secondary-hover',
@@ -32,11 +31,10 @@ const TONES = Object.keys(TONE_CLASSES) as Tone[]
 
 const emptyVariantMap = <T extends string>(keys: T[]) => Object.fromEntries(keys.map((key) => [key, ''])) as Record<T, string>
 
-// No border, no background — per DESIGN §15 ("Outline by default → filled/
-// emphasized when active"), state is communicated entirely through the
-// icon's fill + color, not through a button-shaped container. `p-1 -m-1`
-// pads the hit/focus-ring area (§20 touch-target guidance) without
-// changing the visible footprint (negative margin cancels it out).
+/**
+ * No border/background (DESIGN §15) — state shows through icon fill/color alone.
+ * `p-1 -m-1` pads the hit/focus-ring area (§20) without changing the visible footprint.
+ */
 export const iconToggleVariants = cva(
 	'group inline-flex items-center gap-1.5 rounded-md p-1 -m-1 text-small font-medium text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-40',
 	{

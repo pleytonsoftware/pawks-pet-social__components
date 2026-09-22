@@ -6,14 +6,13 @@ import { DIALOG_CONTENT_CLASSES, DIALOG_OVERLAY_CLASSES } from '@/lib/dialog-cla
 
 import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog'
 
-// A distinct Radix primitive from Dialog, not a styling variant of it — for
-// confirmations the user must explicitly acknowledge (destructive or
-// otherwise irreversible actions), not general modal content. No default
-// close (×) button, unlike Dialog: dismissal only ever happens through
-// Cancel/Action, never a casual dismiss. Radix owns focus trapping/
-// restoration, Escape, modal behavior, and action/cancel semantics.
-
 export type AlertDialogProps = ComponentProps<typeof AlertDialogPrimitive.Root>
+
+/**
+ * A distinct Radix primitive from Dialog, not a styling variant of it — for
+ * confirmations the user must explicitly acknowledge, not general modal content.
+ * No default close (×) button: dismissal only happens through Cancel/Action.
+ */
 export const AlertDialog: FC<AlertDialogProps> = (props) => <AlertDialogPrimitive.Root data-slot='alert-dialog' {...props} />
 
 export type AlertDialogTriggerProps = ComponentPropsWithRef<typeof AlertDialogPrimitive.Trigger>
@@ -70,9 +69,7 @@ export const AlertDialogDescription: FC<AlertDialogDescriptionProps> = ({ classN
 
 export type AlertDialogActionProps = ComponentPropsWithRef<typeof AlertDialogPrimitive.Action>
 
-// Styled via `buttonVariants` (not the `Button` component itself) to avoid a
-// hard dependency on Button while still matching its exact appearance — the
-// consuming feature owns what the action actually does (e.g. `onClick`).
+/** Styled via `buttonVariants`, not `Button` itself, to avoid a hard dependency while matching its exact look. */
 export const AlertDialogAction: FC<AlertDialogActionProps> = ({ className, ref, ...props }) => (
 	<AlertDialogPrimitive.Action ref={ref} data-slot='alert-dialog-action' className={cn(buttonVariants(), className)} {...props} />
 )

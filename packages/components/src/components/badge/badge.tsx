@@ -50,9 +50,7 @@ const TONE_APPEARANCE_CLASSES = {
 	},
 } as const
 
-// The status dot always uses a solid, saturated fill regardless of
-// `appearance` — it needs to read clearly as a status indicator even in
-// `outline`/`soft` badges where the text itself is a lighter tint.
+/** Always a solid, saturated fill regardless of `appearance`, so it reads clearly even in `outline`/`soft` badges. */
 const DOT_TONE_CLASSES = {
 	primary: 'bg-primary',
 	secondary: 'bg-secondary',
@@ -76,10 +74,7 @@ const toneAppearanceCompoundVariants = APPEARANCES.flatMap((appearance) =>
 	TONES.map((tone) => ({ appearance, tone, class: TONE_APPEARANCE_CLASSES[appearance][tone] })),
 )
 
-// Radius is `full` per §13 ("Avatar / pill / badge → full"). Sizing
-// extends DESIGN §25.4's locked Badge row (12px / 24px / 8px — treated as
-// `md` here) proportionally to `sm`/`lg`, the same way Button's own
-// sm/md/lg scale was built.
+/** Radius `full` per §13. Sizing extends DESIGN §25.4's locked Badge row proportionally to `sm`/`lg`. */
 export const badgeVariants = cva('inline-flex items-center whitespace-nowrap rounded-full font-medium', {
 	variants: {
 		tone: emptyVariantMap(TONES),
