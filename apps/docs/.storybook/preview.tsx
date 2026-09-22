@@ -5,6 +5,8 @@ import type { Preview } from '@storybook/react-vite'
 
 import { useEffect, type ReactNode } from 'react'
 
+import { TooltipProvider } from '@pawks/components/tooltip'
+
 const COATS = [
 	{ value: 'ragdoll', title: 'Ragdoll' },
 	{ value: 'abyssinian', title: 'Abyssinian' },
@@ -54,7 +56,13 @@ const preview: Preview = {
 	decorators: [
 		(Story, context) => (
 			<ThemeDecorator coat={context.globals.coat as string} mode={context.globals.mode as string}>
-				<Story />
+				{/* Radix's Tooltip throws without an ancestor TooltipProvider —
+				    every real app wraps its root once, so every story gets one
+				    here too, the same way. A story demonstrating its own
+				    provider config (e.g. delayDuration) nests one inside this. */}
+				<TooltipProvider>
+					<Story />
+				</TooltipProvider>
 			</ThemeDecorator>
 		),
 	],

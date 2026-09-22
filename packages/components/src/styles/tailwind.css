@@ -201,6 +201,11 @@
  * precompiled stylesheet. `@layer components` keeps the utilities layer able to
  * override (e.g. a consumer's `animate-none`). The `var()` fallbacks matter —
  * Tailwind v4 tree-shakes theme vars that no component class references.
+ * Shared by every floating popper surface (DropdownMenu, Tooltip, and future
+ * ones) via `data-slot`. Radix Tooltip's open state is "delayed-open" /
+ * "instant-open" rather than a plain "open" like the menu family, so the
+ * enter trigger lists those explicitly; closed and the directional slide are
+ * identical across all of them and stay in one shared selector list.
  */
 @layer components {
 	@keyframes pawks-popper-enter {
@@ -226,28 +231,33 @@
 	}
 
 	/* Slide direction follows the side Radix actually resolved to. */
-	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'])[data-side='bottom'] {
+	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'], [data-slot='tooltip-content'])[data-side='bottom'] {
 		--pawks-popper-y: -0.5rem;
 	}
-	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'])[data-side='top'] {
+	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'], [data-slot='tooltip-content'])[data-side='top'] {
 		--pawks-popper-y: 0.5rem;
 	}
-	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'])[data-side='right'] {
+	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'], [data-slot='tooltip-content'])[data-side='right'] {
 		--pawks-popper-x: -0.5rem;
 	}
-	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'])[data-side='left'] {
+	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'], [data-slot='tooltip-content'])[data-side='left'] {
 		--pawks-popper-x: 0.5rem;
 	}
 
-	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'])[data-state='open'] {
+	:is(
+		[data-slot='dropdown-menu-content'][data-state='open'],
+		[data-slot='dropdown-menu-sub-content'][data-state='open'],
+		[data-slot='tooltip-content'][data-state='delayed-open'],
+		[data-slot='tooltip-content'][data-state='instant-open']
+	) {
 		animation: pawks-popper-enter 150ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
 	}
-	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'])[data-state='closed'] {
+	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'], [data-slot='tooltip-content'])[data-state='closed'] {
 		animation: pawks-popper-exit 100ms var(--ease-in-out, cubic-bezier(0.4, 0, 0.2, 1));
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'])[data-state] {
+		:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'], [data-slot='tooltip-content'])[data-state] {
 			animation: none;
 		}
 	}
