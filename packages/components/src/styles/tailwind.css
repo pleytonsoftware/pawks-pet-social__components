@@ -231,16 +231,36 @@
 	}
 
 	/* Slide direction follows the side Radix actually resolved to. */
-	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'], [data-slot='tooltip-content'])[data-side='bottom'] {
+	:is(
+		[data-slot='dropdown-menu-content'],
+		[data-slot='dropdown-menu-sub-content'],
+		[data-slot='tooltip-content'],
+		[data-slot='hover-card-content']
+	)[data-side='bottom'] {
 		--pawks-popper-y: -0.5rem;
 	}
-	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'], [data-slot='tooltip-content'])[data-side='top'] {
+	:is(
+		[data-slot='dropdown-menu-content'],
+		[data-slot='dropdown-menu-sub-content'],
+		[data-slot='tooltip-content'],
+		[data-slot='hover-card-content']
+	)[data-side='top'] {
 		--pawks-popper-y: 0.5rem;
 	}
-	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'], [data-slot='tooltip-content'])[data-side='right'] {
+	:is(
+		[data-slot='dropdown-menu-content'],
+		[data-slot='dropdown-menu-sub-content'],
+		[data-slot='tooltip-content'],
+		[data-slot='hover-card-content']
+	)[data-side='right'] {
 		--pawks-popper-x: -0.5rem;
 	}
-	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'], [data-slot='tooltip-content'])[data-side='left'] {
+	:is(
+		[data-slot='dropdown-menu-content'],
+		[data-slot='dropdown-menu-sub-content'],
+		[data-slot='tooltip-content'],
+		[data-slot='hover-card-content']
+	)[data-side='left'] {
 		--pawks-popper-x: 0.5rem;
 	}
 
@@ -248,16 +268,27 @@
 		[data-slot='dropdown-menu-content'][data-state='open'],
 		[data-slot='dropdown-menu-sub-content'][data-state='open'],
 		[data-slot='tooltip-content'][data-state='delayed-open'],
-		[data-slot='tooltip-content'][data-state='instant-open']
+		[data-slot='tooltip-content'][data-state='instant-open'],
+		[data-slot='hover-card-content'][data-state='open']
 	) {
 		animation: pawks-popper-enter 150ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
 	}
-	:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'], [data-slot='tooltip-content'])[data-state='closed'] {
+	:is(
+		[data-slot='dropdown-menu-content'],
+		[data-slot='dropdown-menu-sub-content'],
+		[data-slot='tooltip-content'],
+		[data-slot='hover-card-content']
+	)[data-state='closed'] {
 		animation: pawks-popper-exit 100ms var(--ease-in-out, cubic-bezier(0.4, 0, 0.2, 1));
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		:is([data-slot='dropdown-menu-content'], [data-slot='dropdown-menu-sub-content'], [data-slot='tooltip-content'])[data-state] {
+		:is(
+			[data-slot='dropdown-menu-content'],
+			[data-slot='dropdown-menu-sub-content'],
+			[data-slot='tooltip-content'],
+			[data-slot='hover-card-content']
+		)[data-state] {
 			animation: none;
 		}
 	}
