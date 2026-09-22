@@ -421,4 +421,32 @@
 			animation: none;
 		}
 	}
+
+	/**
+	 * Sonner (packages/components/src/components/sonner) integration — most of
+	 * its visual surface is already reachable via the `--normal-*`/`--success-*`/
+	 * etc. CSS custom properties set in sonner.tsx's own `style` prop, which
+	 * this component maps to our tokens directly (and which stay live under
+	 * `.dark` with zero JS, since custom-property lookups re-resolve on every
+	 * paint). These two spots are the exception: Sonner's own injected
+	 * stylesheet hardcodes literal hex colors here with no corresponding CSS
+	 * variable at all, so no amount of `style`-prop mapping can reach them.
+	 * `!important` is deliberate and necessary, not stylistic — Sonner injects
+	 * its own stylesheet at component-mount time (`__insertCSS`, not present
+	 * in the initial HTML), so it can land after this precompiled stylesheet
+	 * in the cascade; matching its selector's specificity wouldn't reliably
+	 * win against a rule that may simply be *later* in the DOM.
+	 */
+	[data-sonner-toast] [data-description] {
+		color: var(--muted-foreground) !important;
+	}
+	[data-sonner-toast] [data-close-button] {
+		background: var(--popover) !important;
+		border-color: var(--border) !important;
+		color: var(--popover-foreground) !important;
+	}
+	[data-sonner-toast] [data-close-button]:hover {
+		background: var(--muted) !important;
+		border-color: var(--border) !important;
+	}
 }
