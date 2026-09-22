@@ -5,7 +5,7 @@ import type { ComponentProps, FC } from 'react'
  * stroke per §15/§25.6) rather than adding lucide-react as a real
  * dependency here — Icon/Button/IconToggle only import it for types, and
  * actual icon values always come caller-supplied from @pawks/icons.
- * Shared across Checkbox/Select/NativeSelect/DropdownMenu rather than duplicated per component.
+ * Shared across Checkbox/Select/NativeSelect/DropdownMenu/Dialog rather than duplicated per component.
  */
 const BASE_PROPS = {
 	viewBox: '0 0 24 24',
@@ -44,5 +44,12 @@ export const ChevronUpIcon: FC<ComponentProps<'svg'>> = (props) => (
 export const ChevronRightIcon: FC<ComponentProps<'svg'>> = (props) => (
 	<svg {...BASE_PROPS} {...props}>
 		<path d='m9 18 6-6-6-6' />
+	</svg>
+)
+
+export const XIcon: FC<ComponentProps<'svg'>> = (props) => (
+	<svg {...BASE_PROPS} {...props}>
+		<path d='M18 6 6 18' />
+		<path d='m6 6 12 12' />
 	</svg>
 )
