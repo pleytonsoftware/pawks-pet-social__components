@@ -2,9 +2,10 @@ import type { ComponentProps, ComponentPropsWithRef, FC } from 'react'
 
 import { cn } from '@/lib/cn.js'
 import { DIALOG_CONTENT_CLASSES, DIALOG_OVERLAY_CLASSES } from '@/lib/dialog-classes.js'
-import { XIcon } from '@/lib/form-icons.js'
+import { CHROME_ICON_PROPS } from '@/lib/icon-props.js'
 
 import * as DialogPrimitive from '@radix-ui/react-dialog'
+import { X } from '@pawks/icons'
 
 export type DialogProps = ComponentProps<typeof DialogPrimitive.Root>
 /**
@@ -38,8 +39,8 @@ export const DialogContent: FC<DialogContentProps> = ({ className, children, ref
 		<DialogOverlay />
 		<DialogPrimitive.Content ref={ref} data-slot='dialog-content' className={cn(DIALOG_CONTENT_CLASSES, className)} {...props}>
 			{children}
-			<DialogClose className='absolute top-4 right-4 rounded-xs text-card-foreground/60 outline-none transition-colors hover:text-card-foreground focus-visible:ring-[3px] focus-visible:ring-ring disabled:pointer-events-none'>
-				<XIcon className='size-4' />
+			<DialogClose className='absolute hover:cursor-pointer top-4 right-4 rounded-xs text-card-foreground/60 outline-none transition-colors hover:text-card-foreground focus-visible:ring-[3px] focus-visible:ring-ring disabled:pointer-events-none'>
+				<X {...CHROME_ICON_PROPS} className='size-4' />
 				<span className='sr-only'>Close</span>
 			</DialogClose>
 		</DialogPrimitive.Content>

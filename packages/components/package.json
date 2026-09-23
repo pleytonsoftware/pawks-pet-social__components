@@ -42,6 +42,7 @@
 		"check-types": "node scripts/generate-index.mjs && tsc --noEmit"
 	},
 	"peerDependencies": {
+		"@pawks/icons": "^0.1.0",
 		"motion": "^13.0.0",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0"
@@ -71,6 +72,7 @@
 	"devDependencies": {
 		"@config/eslint-config": "workspace:*",
 		"@config/typescript-config": "workspace:*",
+		"@pawks/icons": "workspace:*",
 		"@tailwindcss/cli": "4.3.3",
 		"@types/node": "26.4.1",
 		"@types/react": "19.2.18",

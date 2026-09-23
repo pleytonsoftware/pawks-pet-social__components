@@ -2,7 +2,9 @@ import type { ComponentPropsWithRef, FC } from 'react'
 
 import { cn } from '@/lib/cn.js'
 import { FORM_CONTROL_BASE_CLASSES } from '@/lib/form-control-classes.js'
-import { ChevronDownIcon } from '@/lib/form-icons.js'
+import { CHROME_ICON_PROPS } from '@/lib/icon-props.js'
+
+import { ChevronDown } from '@pawks/icons'
 
 export type NativeSelectProps = ComponentPropsWithRef<'select'>
 
@@ -20,6 +22,9 @@ export const NativeSelect: FC<NativeSelectProps> = ({ className, children, ref, 
 		<select ref={ref} data-slot='native-select' className={cn(FORM_CONTROL_BASE_CLASSES, 'h-8 appearance-none pr-7', className)} {...props}>
 			{children}
 		</select>
-		<ChevronDownIcon className='pointer-events-none mr-2 size-3.5 self-center justify-self-end text-muted-foreground peer-disabled:opacity-40' />
+		<ChevronDown
+			{...CHROME_ICON_PROPS}
+			className='pointer-events-none mr-2 size-3.5 self-center justify-self-end text-muted-foreground peer-disabled:opacity-40'
+		/>
 	</div>
 )

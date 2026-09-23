@@ -82,7 +82,7 @@ export const BubbleContent: FC<BubbleContentProps> = ({ className, asChild, ref,
 }
 
 const bubbleReactionsVariants = cva(
-	'absolute z-10 inline-flex items-center gap-1 rounded-full border border-border bg-popover px-1.5 py-0.5 text-caption text-popover-foreground shadow-sm',
+	'absolute z-10 inline-flex items-center gap-1 rounded-full border-2 border-border bg-popover px-1.5 py-0.5 text-caption text-popover-foreground shadow-sm',
 	{
 		variants: {
 			side: { top: '-top-3.5', bottom: '-bottom-3' },

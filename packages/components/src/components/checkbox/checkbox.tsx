@@ -1,9 +1,10 @@
 import type { ComponentPropsWithRef, FC } from 'react'
 
 import { cn } from '@/lib/cn.js'
-import { CheckIcon, MinusIcon } from '@/lib/form-icons.js'
+import { CHROME_ICON_PROPS } from '@/lib/icon-props.js'
 
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
+import { Check, Minus } from '@pawks/icons'
 
 export type CheckboxProps = ComponentPropsWithRef<typeof CheckboxPrimitive.Root>
 
@@ -25,8 +26,8 @@ export const Checkbox: FC<CheckboxProps> = ({ className, ref, ...props }) => (
 		{...props}
 	>
 		<CheckboxPrimitive.Indicator className='group flex items-center justify-center text-current'>
-			<CheckIcon className='hidden size-3 group-data-[state=checked]:block' />
-			<MinusIcon className='hidden size-3 group-data-[state=indeterminate]:block' />
+			<Check {...CHROME_ICON_PROPS} className='hidden size-3 group-data-[state=checked]:block' />
+			<Minus {...CHROME_ICON_PROPS} className='hidden size-3 group-data-[state=indeterminate]:block' />
 		</CheckboxPrimitive.Indicator>
 	</CheckboxPrimitive.Root>
 )

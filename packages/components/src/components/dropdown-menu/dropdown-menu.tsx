@@ -1,11 +1,12 @@
 import type { ComponentProps, ComponentPropsWithRef, FC } from 'react'
 
 import { cn } from '@/lib/cn.js'
-import { CheckIcon, ChevronRightIcon } from '@/lib/form-icons.js'
+import { CHROME_ICON_PROPS } from '@/lib/icon-props.js'
 
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
+import { Check, ChevronRight } from '@pawks/icons'
 
 export type DropdownMenuProps = ComponentProps<typeof DropdownMenuPrimitive.Root>
 /**
@@ -100,7 +101,7 @@ export const DropdownMenuCheckboxItem: FC<DropdownMenuCheckboxItemProps> = ({ cl
 		{...props}
 	>
 		<ItemIndicatorSlot>
-			<CheckIcon className='size-3.5' />
+			<Check {...CHROME_ICON_PROPS} className='size-3.5' />
 		</ItemIndicatorSlot>
 		{children}
 	</DropdownMenuPrimitive.CheckboxItem>
@@ -162,7 +163,7 @@ export const DropdownMenuSubTrigger: FC<DropdownMenuSubTriggerProps> = ({ classN
 		{...props}
 	>
 		{children}
-		<ChevronRightIcon className='ml-auto size-3.5' />
+		<ChevronRight {...CHROME_ICON_PROPS} className='ml-auto size-3.5' />
 	</DropdownMenuPrimitive.SubTrigger>
 )
 

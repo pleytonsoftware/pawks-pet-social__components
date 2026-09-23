@@ -2,9 +2,10 @@ import type { ComponentProps, ComponentPropsWithRef, FC } from 'react'
 
 import { cn } from '@/lib/cn.js'
 import { FORM_CONTROL_BASE_CLASSES } from '@/lib/form-control-classes.js'
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@/lib/form-icons.js'
+import { CHROME_ICON_PROPS } from '@/lib/icon-props.js'
 
 import * as SelectPrimitive from '@radix-ui/react-select'
+import { Check, ChevronDown, ChevronUp } from '@pawks/icons'
 
 export type SelectProps = ComponentProps<typeof SelectPrimitive.Root>
 /**
@@ -38,7 +39,7 @@ export const SelectTrigger: FC<SelectTriggerProps> = ({ className, children, ref
 	>
 		{children}
 		<SelectPrimitive.Icon asChild>
-			<ChevronDownIcon className='size-3.5 text-muted-foreground' />
+			<ChevronDown {...CHROME_ICON_PROPS} className='size-3.5 text-muted-foreground' />
 		</SelectPrimitive.Icon>
 	</SelectPrimitive.Trigger>
 )
@@ -90,7 +91,7 @@ export const SelectItem: FC<SelectItemProps> = ({ className, children, ref, ...p
 	>
 		<span className='absolute right-2 flex size-3.5 items-center justify-center'>
 			<SelectPrimitive.ItemIndicator>
-				<CheckIcon className='size-3.5' />
+				<Check {...CHROME_ICON_PROPS} className='size-3.5' />
 			</SelectPrimitive.ItemIndicator>
 		</span>
 		<SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
@@ -117,7 +118,7 @@ export const SelectScrollUpButton: FC<SelectScrollUpButtonProps> = ({ className,
 		className={cn('flex cursor-default items-center justify-center py-1', className)}
 		{...props}
 	>
-		<ChevronUpIcon className='size-3.5' />
+		<ChevronUp {...CHROME_ICON_PROPS} className='size-3.5' />
 	</SelectPrimitive.ScrollUpButton>
 )
 
@@ -129,6 +130,6 @@ export const SelectScrollDownButton: FC<SelectScrollDownButtonProps> = ({ classN
 		className={cn('flex cursor-default items-center justify-center py-1', className)}
 		{...props}
 	>
-		<ChevronDownIcon className='size-3.5' />
+		<ChevronDown {...CHROME_ICON_PROPS} className='size-3.5' />
 	</SelectPrimitive.ScrollDownButton>
 )

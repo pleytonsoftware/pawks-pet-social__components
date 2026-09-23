@@ -200,6 +200,9 @@ importers:
       '@config/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@pawks/icons':
+        specifier: workspace:*
+        version: link:../icons
       '@tailwindcss/cli':
         specifier: 4.3.3
         version: 4.3.3

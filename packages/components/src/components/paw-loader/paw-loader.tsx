@@ -6,9 +6,9 @@ import { motion, useReducedMotion } from 'motion/react'
 
 /**
  * lucide's `paw-print` geometry verbatim (24x24, 1.75px stroke per §15/§25.6),
- * hand-authored rather than imported — same reasoning as lib/form-icons.tsx:
- * lucide-react is a types-only devDependency here and icon values always come
- * caller-supplied from @pawks/icons.
+ * hand-authored rather than imported from `@pawks/icons` — the toes and pad
+ * below animate independently via motion/react, which needs them as
+ * separate elements, not one opaque `<PawPrint>` SVG.
  */
 const TOES = [
 	{ cx: 11, cy: 4 },
